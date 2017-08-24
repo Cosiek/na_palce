@@ -23,24 +23,23 @@ ApplicationWindow {
         id: menuComponent
 
         Column {
+            id: column
             spacing: 10
 
             Text {
-                text: "Trumpet Fingers"
-                font.bold: true
+                text: "🎺"
+                anchors.horizontalCenter: parent.horizontalCenter
                 font.pointSize: 24
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 10
                 horizontalAlignment: Text.AlignHCenter
             }
             Button {
-                text: "Start"
+                text: "▶"
+                anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: stackView.push(notesComponent)
             }
             Button {
-                text: "Exit"
+                text: "🚪"
+                anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: Qt.quit()
             }
 
@@ -50,33 +49,47 @@ ApplicationWindow {
     Component {
         id: notesComponent
 
-        Column {
-            spacing: 10
+        GridLayout {
+            id: gridLayout
+            columns: 3
+            rows: 3
+
             Button {
-                text: "Exit"
+                text: "⬅"
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 40
+                Layout.columnSpan: 3
                 onClicked: stackView.pop()
             }
             Text {
-                text: "Play Me!"
-                font.bold: true
+                text: "🎼\nPres any key to start."
                 font.pointSize: 36
                 anchors.left: parent.left
                 anchors.leftMargin: 10
                 anchors.right: parent.right
                 anchors.rightMargin: 10
                 horizontalAlignment: Text.AlignHCenter
+                Layout.columnSpan: 3
             }
             Button {
                 id: valve1
                 text: "1"
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 40
             }
             Button {
                 id: valve2
                 text: "2"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 40
             }
             Button {
                 id: valve3
                 text: "3"
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                Layout.preferredHeight: 40
+                Layout.preferredWidth: 40
             }
         }
     }
