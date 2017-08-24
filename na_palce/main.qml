@@ -76,6 +76,8 @@ ApplicationWindow {
                 text: "1"
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
+                onPressed: print("valve1 pressed")
+                onReleased: print("valve1 relased")
             }
             Button {
                 id: valve2
@@ -83,6 +85,8 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
+                onPressed: print("valve2 pressed")
+                onReleased: print("valve2 relased")
             }
             Button {
                 id: valve3
@@ -90,6 +94,8 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
+                onPressed: print("valve3 pressed")
+                onReleased: print("valve3 relased")
             }
         }
     }
