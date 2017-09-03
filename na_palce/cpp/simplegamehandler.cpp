@@ -2,7 +2,11 @@
 #include <unordered_map>
 
 
-std::unordered_map<std::string, bool> pressed;
+std::unordered_map<std::string, bool> pressed = {
+    {"valve1", false},
+    {"valve2", false},
+    {"valve3", false}
+};
 
 SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
 {}
