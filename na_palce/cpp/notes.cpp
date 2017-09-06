@@ -1,4 +1,5 @@
 #include <string>
+#include <unordered_map>
 
 struct keys_state{
     bool valve1, valve2, valve3;
@@ -11,6 +12,7 @@ public:
     keys_state keys;
     bool sharp, flat;
     NoteType(int, std::string, keys_state, bool, bool);
+    bool match(std::unordered_map<std::string, bool>);
 };
 
 NoteType::NoteType(int pos, std::string name, keys_state keys, bool sharp,
@@ -71,3 +73,11 @@ const NoteType NOTE_TYPES [] = {
     NoteType(13, "B", {false, true, false}, false, false),
     NoteType(14, "C", {false, false, false}, false, false),
 };
+
+
+bool NoteType::match(std::unordered_map<std::string, bool> keys){
+    return (this->keys.valve1 == keys["valve1"] &&
+            this->keys.valve2 == keys["valve2"] &&
+            this->keys.valve3 == keys["valve3"]);
+}
+
