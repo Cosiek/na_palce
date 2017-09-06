@@ -1,3 +1,4 @@
+#include<array>
 #include <string>
 #include <unordered_map>
 
@@ -13,6 +14,7 @@ public:
     bool sharp, flat;
     NoteType(int, std::string, keys_state, bool, bool);
     bool match(std::unordered_map<std::string, bool>);
+    int getNoteByKeys(std::unordered_map<std::string, bool>);
 };
 
 NoteType::NoteType(int pos, std::string name, keys_state keys, bool sharp,
@@ -26,7 +28,7 @@ NoteType::NoteType(int pos, std::string name, keys_state keys, bool sharp,
 
 // Notes definitions ----------------------------------------------------------
 
-const NoteType NOTE_TYPES [] = {
+const std::array<NoteType, 45> NOTE_TYPES = {
     NoteType(-4, "#F", {true, true, true}, true, false),
     NoteType(-3, "bG", {true, true, true}, false, true),
     NoteType(-3, "G", {true, false, true}, false, false),
@@ -81,3 +83,12 @@ bool NoteType::match(std::unordered_map<std::string, bool> keys){
             this->keys.valve3 == keys["valve3"]);
 }
 
+int NoteType::getNoteByKeys(std::unordered_map<std::string, bool> pressed){
+    unsigned int i = 0;
+    while (i < NOTE_TYPES.size()) {
+        NoteType note_type = NOTE_TYPES[i];
+        if (note_type.match(pressed)){return i;}
+        i++;
+    }
+    return -1;
+}
