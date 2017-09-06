@@ -1,6 +1,7 @@
 #include<array>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 struct keys_state{
     bool valve1, valve2, valve3;
@@ -14,7 +15,7 @@ public:
     bool sharp, flat;
     NoteType(int, std::string, keys_state, bool, bool);
     bool match(std::unordered_map<std::string, bool>);
-    int getNoteByKeys(std::unordered_map<std::string, bool>);
+    std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
 };
 
 NoteType::NoteType(int pos, std::string name, keys_state keys, bool sharp,
@@ -83,12 +84,14 @@ bool NoteType::match(std::unordered_map<std::string, bool> keys){
             this->keys.valve3 == keys["valve3"]);
 }
 
-int NoteType::getNoteByKeys(std::unordered_map<std::string, bool> pressed){
+std::vector<NoteType> NoteType::getNotesByKeys(
+        std::unordered_map<std::string, bool> pressed){
+    std::vector<NoteType> v = {};
     unsigned int i = 0;
     while (i < NOTE_TYPES.size()) {
         NoteType note_type = NOTE_TYPES[i];
-        if (note_type.match(pressed)){return i;}
+        if (note_type.match(pressed)){v.push_back(note_type);}
         i++;
     }
-    return -1;
+    return v;
 }
