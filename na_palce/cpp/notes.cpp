@@ -18,13 +18,13 @@ public:
     std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
 };
 
-NoteType::NoteType(int pos, std::string name, keys_state keys, bool sharp,
-                   bool flat){
+NoteType::NoteType(int pos, std::string name_, keys_state keys_, bool sharp_,
+                   bool flat_){
     position = pos;
-    name = name;
-    keys = keys;
-    sharp = sharp;
-    flat = flat;
+    name = name_;
+    keys = keys_;
+    sharp = sharp_;
+    flat = flat_;
 }
 
 // Notes definitions ----------------------------------------------------------
