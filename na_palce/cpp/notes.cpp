@@ -1,4 +1,4 @@
-#include<array>
+#include <array>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -29,7 +29,7 @@ NoteType::NoteType(int pos, std::string name, keys_state keys, bool sharp,
 
 // Notes definitions ----------------------------------------------------------
 
-const std::array<NoteType, 45> NOTE_TYPES = {
+extern const std::array<NoteType, 45> NOTE_TYPES = {
     NoteType(-4, "#F", {true, true, true}, true, false),
     NoteType(-3, "bG", {true, true, true}, false, true),
     NoteType(-3, "G", {true, false, true}, false, false),
