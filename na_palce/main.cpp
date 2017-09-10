@@ -1,11 +1,23 @@
+#include <cstdlib>
+#include <ctime>
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
 #include <QQmlContext>
+
 #include "cpp/simplegamehandler.h"
+
+
+void initialize_stuff(){
+    std::srand(std::time(0));
+}
+
 
 int main(int argc, char *argv[])
 {
+    initialize_stuff();
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
