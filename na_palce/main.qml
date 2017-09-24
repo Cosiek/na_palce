@@ -62,6 +62,7 @@ ApplicationWindow {
                 onClicked: stackView.pop()
             }
             Text {
+                id: notes_display
                 text: "🎼\nPres any key to start."
                 font.pointSize: 36
                 anchors.left: parent.left
@@ -96,6 +97,10 @@ ApplicationWindow {
                 Layout.preferredWidth: 40
                 onPressed: print(game_handler.key_pressed("valve3"))
                 onReleased: print(game_handler.key_released("valve3"))
+
+            Component.onCompleted: {
+                game_handler.set_state()
+                notes_display.text = game_handler.get_current_state()
             }
         }
     }
