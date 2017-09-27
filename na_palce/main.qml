@@ -77,8 +77,14 @@ ApplicationWindow {
                 text: "1"
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: print(game_handler.key_pressed("valve1"))
-                onReleased: print(game_handler.key_released("valve1"))
+                onPressed: {
+                    print(game_handler.key_pressed("valve1"))
+                    notes_display.text = game_handler.get_current_state()
+                }
+                onReleased: {
+                    print(game_handler.key_released("valve1"))
+                    notes_display.text = game_handler.get_current_state()
+                }
             }
             Button {
                 id: valve2
@@ -86,8 +92,14 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: print(game_handler.key_pressed("valve2"))
-                onReleased: print(game_handler.key_released("valve2"))
+                onPressed: {
+                    print(game_handler.key_pressed("valve2"))
+                    notes_display.text = game_handler.get_current_state()
+                }
+                onReleased: {
+                    print(game_handler.key_released("valve2"))
+                    notes_display.text = game_handler.get_current_state()
+                }
             }
             Button {
                 id: valve3
@@ -95,8 +107,15 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: print(game_handler.key_pressed("valve3"))
-                onReleased: print(game_handler.key_released("valve3"))
+                onPressed: {
+                    print(game_handler.key_pressed("valve3"))
+                    notes_display.text = game_handler.get_current_state()
+                }
+                onReleased: {
+                    print(game_handler.key_released("valve3"))
+                    notes_display.text = game_handler.get_current_state()
+                }
+            }
 
             Component.onCompleted: {
                 game_handler.set_state()
