@@ -22,6 +22,8 @@ QString SimpleGameHandler::get_current_state(){
     QString note_names;
     for(NoteType nt : current_notes) {
         note_names.append(nt.name.c_str());
+        note_names.append('+');
+        note_names.append(std::to_string(nt.position).c_str());
         note_names.append(' ');
     }
     return note_names;
