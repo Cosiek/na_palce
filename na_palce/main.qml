@@ -17,6 +17,11 @@ ApplicationWindow {
         anchors.topMargin: 0
         anchors.fill: parent
         initialItem: menuComponent
+        onCurrentItemChanged: {
+            if (currentItem  && currentItem.defaultFocusItem) {
+                currentItem.defaultFocusItem.focus = true
+            }
+        }
     }
 
     Component {
@@ -53,6 +58,17 @@ ApplicationWindow {
             id: gridLayout
             columns: 3
             rows: 3
+            property Item defaultFocusItem: this
+
+            Keys.onPressed: {
+                console.log(event.key + " pressed");
+                event.accepted = true;
+            }
+
+            Keys.onReleased: {
+                console.log(event.key + " relased");
+                event.accepted = true;
+            }
 
             Button {
                 text: "⬅"
