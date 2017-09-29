@@ -60,13 +60,27 @@ ApplicationWindow {
             rows: 3
             property Item defaultFocusItem: this
 
+            function keyPressed(keyName){
+                print(game_handler.key_pressed(keyName))
+                notes_display.text = game_handler.get_current_state()
+            }
+
+            function keyReleased(keyName){
+                print(game_handler.key_released(keyName))
+                notes_display.text = game_handler.get_current_state()
+            }
+
             Keys.onPressed: {
-                console.log(event.key + " pressed");
+                if (event.key === Qt.Key_Left){keyPressed("valve1")}
+                else if (event.key === Qt.Key_Down){keyPressed("valve2")}
+                else if (event.key === Qt.Key_Right){keyPressed("valve3")}
                 event.accepted = true;
             }
 
             Keys.onReleased: {
-                console.log(event.key + " relased");
+                if (event.key === Qt.Key_Left){keyReleased("valve1")}
+                else if (event.key === Qt.Key_Down){keyReleased("valve2")}
+                else if (event.key === Qt.Key_Right){keyReleased("valve3")}
                 event.accepted = true;
             }
 
@@ -93,14 +107,8 @@ ApplicationWindow {
                 text: "1"
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: {
-                    print(game_handler.key_pressed("valve1"))
-                    notes_display.text = game_handler.get_current_state()
-                }
-                onReleased: {
-                    print(game_handler.key_released("valve1"))
-                    notes_display.text = game_handler.get_current_state()
-                }
+                onPressed: keyPressed("valve1")
+                onReleased: keyReleased("valve1")
             }
             Button {
                 id: valve2
@@ -108,14 +116,8 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: {
-                    print(game_handler.key_pressed("valve2"))
-                    notes_display.text = game_handler.get_current_state()
-                }
-                onReleased: {
-                    print(game_handler.key_released("valve2"))
-                    notes_display.text = game_handler.get_current_state()
-                }
+                onPressed: keyPressed("valve2")
+                onReleased: keyReleased("valve2")
             }
             Button {
                 id: valve3
@@ -123,14 +125,8 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: {
-                    print(game_handler.key_pressed("valve3"))
-                    notes_display.text = game_handler.get_current_state()
-                }
-                onReleased: {
-                    print(game_handler.key_released("valve3"))
-                    notes_display.text = game_handler.get_current_state()
-                }
+                onPressed: keyPressed("valve3")
+                onReleased: keyReleased("valve3")
             }
 
             Component.onCompleted: {
