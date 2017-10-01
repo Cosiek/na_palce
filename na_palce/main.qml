@@ -71,16 +71,16 @@ ApplicationWindow {
             }
 
             Keys.onPressed: {
-                if (event.key == Qt.Key_Left){keyPressed("valve1")}
-                else if (event.key == Qt.Key_Down){keyPressed("valve2")}
-                else if (event.key == Qt.Key_Right){keyPressed("valve3")}
+                if (event.key === Qt.Key_Left){keyPressed("valve1")}
+                else if (event.key === Qt.Key_Down){keyPressed("valve2")}
+                else if (event.key === Qt.Key_Right){keyPressed("valve3")}
                 event.accepted = true;
             }
 
             Keys.onReleased: {
-                if (event.key == Qt.Key_Left){keyReleased("valve1")}
-                else if (event.key == Qt.Key_Down){keyReleased("valve2")}
-                else if (event.key == Qt.Key_Right){keyReleased("valve3")}
+                if (event.key === Qt.Key_Left){keyReleased("valve1")}
+                else if (event.key === Qt.Key_Down){keyReleased("valve2")}
+                else if (event.key === Qt.Key_Right){keyReleased("valve3")}
                 event.accepted = true;
             }
 
