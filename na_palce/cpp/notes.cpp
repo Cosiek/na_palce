@@ -15,6 +15,7 @@ public:
     bool sharp, flat;
     NoteType(int, std::string, keys_state, bool, bool);
     bool match(std::unordered_map<std::string, bool>);
+    bool isMistake(std::string, bool);
     std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
 };
 
@@ -82,6 +83,17 @@ bool NoteType::match(std::unordered_map<std::string, bool> keys){
     return (this->keys.valve1 == keys["valve1"] &&
             this->keys.valve2 == keys["valve2"] &&
             this->keys.valve3 == keys["valve3"]);
+}
+
+
+bool NoteType::isMistake(std::string valve, bool isPressed){
+    if (valve == "valve1"){
+        return this->keys.valve1 != isPressed;
+    } else if (valve == "valve2"){
+        return this->keys.valve2 != isPressed;
+    } else if (valve == "valve3"){
+        return this->keys.valve3 != isPressed;
+    }
 }
 
 std::vector<NoteType> NoteType::getNotesByKeys(
