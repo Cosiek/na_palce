@@ -43,7 +43,6 @@ QString SimpleGameHandler::key_pressed(QString key_name)
     pressed[key_name.toUtf8().constData()] = true;
     for(auto iter=pressed.begin(); iter!=pressed.end(); iter++){
         auto cur = iter->first;
-        qDebug() << cur.c_str() << " = " << pressed[cur];
     }
     return key_name + " pressed (C++)";
 }
@@ -51,9 +50,5 @@ QString SimpleGameHandler::key_pressed(QString key_name)
 QString SimpleGameHandler::key_released(QString key_name)
 {
     pressed[key_name.toUtf8().constData()] = false;
-    qDebug() << pressed[key_name.toUtf8().constData()];
-    auto note = get_random_note();
-    qDebug() << ">" << note.position << "< losowa";
-    qDebug() << note.name.c_str() << " losowa";
     return key_name + " released (C++) ";
 }
