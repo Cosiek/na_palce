@@ -18,6 +18,7 @@ public:
     bool sharp, flat;
     NoteType(int, std::string, keys_state, bool, bool);
     bool match(std::unordered_map<std::string, bool>);
+    bool isMistake(std::string, bool);
     std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
 };
 
