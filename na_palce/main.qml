@@ -61,12 +61,12 @@ ApplicationWindow {
             property Item defaultFocusItem: this
 
             function keyPressed(keyName){
-                print(game_handler.key_pressed(keyName))
+                game_handler.key_pressed(keyName)
                 notes_display.text = game_handler.get_current_state()
             }
 
             function keyReleased(keyName){
-                print(game_handler.key_released(keyName))
+                game_handler.key_released(keyName)
                 notes_display.text = game_handler.get_current_state()
             }
 
