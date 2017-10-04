@@ -71,6 +71,7 @@ ApplicationWindow {
             }
 
             Keys.onPressed: {
+                if (event.isAutoRepeat){return null}
                 if (event.key === Qt.Key_Left){keyPressed("valve1")}
                 else if (event.key === Qt.Key_Down){keyPressed("valve2")}
                 else if (event.key === Qt.Key_Right){keyPressed("valve3")}
@@ -78,6 +79,7 @@ ApplicationWindow {
             }
 
             Keys.onReleased: {
+                if (event.isAutoRepeat){return null}
                 if (event.key === Qt.Key_Left){keyReleased("valve1")}
                 else if (event.key === Qt.Key_Down){keyReleased("valve2")}
                 else if (event.key === Qt.Key_Right){keyReleased("valve3")}
