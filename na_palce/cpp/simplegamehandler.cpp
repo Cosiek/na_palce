@@ -39,21 +39,27 @@ void changeNote(){
 SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
 {}
 
-QString SimpleGameHandler::key_pressed(QString key_name)
-{
-    std::string key = key_name.toUtf8().constData();
-    // set keys state
-    pressed[key] = true;
+
+void checkNote(std::string key, bool isPressed){
     // compare current keys state with what current note type state
     if (current_notes.front().match(pressed)){
         // if correct, get new random note,
         changeNote();
     // if not, check if step in right dirrection
-    } else if (!current_notes.front().isMistake(key, true)){
+    } else if (!current_notes.front().isMistake(key, isPressed)){
         // if change not in right direction, mark error
         qDebug() << "BŁĄD " << key.c_str();
         // TODO increase mistakes counter
     }
+}
+
+
+QString SimpleGameHandler::key_pressed(QString key_name)
+{
+    std::string key = key_name.toUtf8().constData();
+    // set keys state
+    pressed[key] = true;
+    checkNote(key, true);
     return key_name + " pressed (C++)";
 }
 
@@ -62,15 +68,6 @@ QString SimpleGameHandler::key_released(QString key_name)
     std::string key = key_name.toUtf8().constData();
     // set keys state
     pressed[key] = false;
-    // compare current keys state with what current note type state
-    if (current_notes.front().match(pressed)){
-        // if correct, get new random note,
-        changeNote();
-    // if not, check if step in right dirrection
-    } else if (!current_notes.front().isMistake(key, false)){
-        // if change not in right direction, mark error
-        qDebug() << "BŁĄD " << key.c_str();
-        // TODO increase mistakes counter
-    }
+    checkNote(key, false);
     return key_name + " released (C++) ";
 }
