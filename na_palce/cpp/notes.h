@@ -22,6 +22,15 @@ public:
     std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
 };
 
+class Note
+{
+public:
+    int length;
+    NoteType type;
+};
+
+extern Note get_random_note(int, int);
+
 extern const std::array<NoteType, 45> NOTE_TYPES;
 
 #endif // NOTES_H

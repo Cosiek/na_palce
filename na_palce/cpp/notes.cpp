@@ -7,6 +7,10 @@ struct keys_state{
     bool valve1, valve2, valve3;
 };
 
+
+// ============================================================================
+// Note Type ------------------------------------------------------------------
+
 class NoteType{
 public:
     int position;
@@ -96,6 +100,7 @@ bool NoteType::isMistake(std::string valve, bool isPressed){
     }
 }
 
+
 std::vector<NoteType> NoteType::getNotesByKeys(
         std::unordered_map<std::string, bool> pressed){
     std::vector<NoteType> v = {};
@@ -106,4 +111,28 @@ std::vector<NoteType> NoteType::getNotesByKeys(
         i++;
     }
     return v;
+}
+
+// ============================================================================
+// Note lenghth ---------------------------------------------------------------
+
+const std::vector<int> LENGTHS = {1, 2, 4, 8, 16};
+
+// ============================================================================
+// Note (combined) ------------------------------------------------------------
+
+class Note
+{
+public:
+    int length;
+    NoteType type;
+};
+
+
+Note get_random_note(int min, int max){
+    int length;
+    length = LENGTHS[std::rand() % 4];
+    NoteType type = NOTE_TYPES[std::rand() % (max - min) + min];
+    Note note = {length, type};
+    return note;
 }

@@ -12,7 +12,8 @@ std::unordered_map<std::string, bool> pressed = {
 };
 
 NoteType get_random_note(){
-    return NOTE_TYPES[std::rand() % 46];
+    Note note = get_random_note(0, 46);
+    return note.type;
 }
 
 // Create a deque containing current notes
