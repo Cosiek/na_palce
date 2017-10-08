@@ -11,20 +11,15 @@ std::unordered_map<std::string, bool> pressed = {
     {"valve3", false}
 };
 
-NoteType get_random_note(){
-    Note note = get_random_note(0, 46);
-    return note.type;
-}
-
 // Create a deque containing current notes
-std::deque<NoteType> current_notes;
+std::deque<Note> current_notes;
 
 QString SimpleGameHandler::get_current_state(){
     QString note_names;
-    for(NoteType nt : current_notes) {
-        note_names.append(nt.name.c_str());
+    for(Note note : current_notes) {
+        note_names.append(note.type.name.c_str());
         note_names.append('+');
-        note_names.append(std::to_string(nt.position).c_str());
+        note_names.append(std::to_string(note.type.position).c_str());
         note_names.append(' ');
     }
     return note_names;
@@ -32,13 +27,13 @@ QString SimpleGameHandler::get_current_state(){
 
 void SimpleGameHandler::set_state(){
     current_notes.clear();
-    current_notes.push_back(get_random_note());
-    current_notes.push_back(get_random_note());
+    current_notes.push_back(get_random_note(0, 46));
+    current_notes.push_back(get_random_note(0, 46));
 }
 
 void changeNote(){
     current_notes.pop_front();
-    current_notes.push_back(get_random_note());
+    current_notes.push_back(get_random_note(0, 46));
 }
 
 SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
@@ -60,11 +55,6 @@ QString SimpleGameHandler::key_pressed(QString key_name)
         // TODO increase mistakes counter
     }
     return key_name + " pressed (C++)";
-
-    //for(auto iter=pressed.begin(); iter!=pressed.end(); iter++){
-    //    auto cur = iter->first;
-    //    qDebug() << cur.c_str() << " = " << pressed[cur];
-    //}
 }
 
 QString SimpleGameHandler::key_released(QString key_name)

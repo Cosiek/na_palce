@@ -98,6 +98,7 @@ bool NoteType::isMistake(std::string valve, bool isPressed){
     } else if (valve == "valve3"){
         return this->keys.valve3 != isPressed;
     }
+    return true;
 }
 
 
@@ -126,6 +127,8 @@ class Note
 public:
     int length;
     NoteType type;
+    bool match(std::unordered_map<std::string, bool>);
+    bool isMistake(std::string, bool);
 };
 
 
@@ -135,4 +138,14 @@ Note get_random_note(int min, int max){
     NoteType type = NOTE_TYPES[std::rand() % (max - min) + min];
     Note note = {length, type};
     return note;
+}
+
+
+bool Note::match(std::unordered_map<std::string, bool> keys){
+    return this->type.match(keys);
+}
+
+
+bool Note::isMistake(std::string valve, bool isPressed){
+    return this->type.isMistake(valve, isPressed);
 }
