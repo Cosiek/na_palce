@@ -2,6 +2,8 @@
 #include <deque>
 #include <unordered_map>
 
+#include <QtQuick>
+
 #include "simplegamehandler.h"
 #include "notes.h"
 
@@ -13,6 +15,10 @@ std::unordered_map<std::string, bool> pressed = {
 
 // Create a deque containing current notes
 std::deque<Note> current_notes;
+
+// A timer to check if player kept valves in right position
+// if two subseqent notes have the same setting
+QTimer *timer = new QTimer();
 
 QString SimpleGameHandler::get_current_state(){
     QString note_names;
@@ -33,18 +39,25 @@ void SimpleGameHandler::set_state(){
 
 void changeNote(){
     current_notes.pop_front();
-    current_notes.push_back(get_random_note(0, 46));
+    current_notes.push_back(get_random_note(10, 12));
 }
 
 SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
 {}
 
-
 void checkNote(std::string key, bool isPressed){
+    // no matter what is the reason for this function to run
+    // it should stop the timer anyway.
+    timer->stop();
     // compare current keys state with what current note type state
     if (current_notes.front().match(pressed)){
         // if correct, get new random note,
         changeNote();
+        // new note might be using the same setting - use a timer
+        // to check if user havent moved
+        if (current_notes.front().match(pressed)){
+            timer->start(1000);
+        }
     // if not, check if step in right dirrection
     } else if (!current_notes.front().isMistake(key, isPressed)){
         // if change not in right direction, mark error
