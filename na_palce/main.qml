@@ -132,7 +132,6 @@ ApplicationWindow {
             }
 
             Component.onCompleted: {
-                game_handler.set_state()
                 notes_display.text = game_handler.get_current_state()
             }
         }

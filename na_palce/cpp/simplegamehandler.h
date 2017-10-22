@@ -1,23 +1,36 @@
 #ifndef SIMPLEGAMEHANDLER_H
 #define SIMPLEGAMEHANDLER_H
 
-#include <QObject>
-#include <QDebug>
+#include <deque>
+#include <unordered_map>
 
-class SimpleGameHandler : public QObject
+#include <QDebug>
+#include <QObject>
+#include <QTimer>
+
+#include "notes.h"
+
+
+class SimpleGameHandler: public QObject
 {
     Q_OBJECT
 public:
     explicit SimpleGameHandler(QObject *parent = nullptr);
 
+    Q_INVOKABLE QString get_current_state();
     Q_INVOKABLE QString key_pressed(QString);
     Q_INVOKABLE QString key_released(QString);
-    Q_INVOKABLE QString get_current_state();
-    Q_INVOKABLE void set_state();
-
-signals:
-
-public slots:
+private:
+    void set_state();
+    void changeNote();
+    void checkNote(std::string, bool);
+    // a deque containing current notes
+    std::deque<Note> current_notes;
+    // currently pressed keys
+    std::unordered_map<std::string, bool> pressed;
+    // A timer to check if player kept valves in right position
+    // if two subseqent notes have the same setting
+    QTimer * timer;
 };
 
 #endif // SIMPLEGAMEHANDLER_H

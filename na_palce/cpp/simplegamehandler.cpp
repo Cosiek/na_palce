@@ -2,23 +2,33 @@
 #include <deque>
 #include <unordered_map>
 
+#include <QObject>
 #include <QtQuick>
 
 #include "simplegamehandler.h"
 #include "notes.h"
 
-std::unordered_map<std::string, bool> pressed = {
-    {"valve1", false},
-    {"valve2", false},
-    {"valve3", false}
-};
 
-// Create a deque containing current notes
-std::deque<Note> current_notes;
+SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
+{
+    // currently pressed keys
+    this->pressed = {
+        {"valve1", false},
+        {"valve2", false},
+        {"valve3", false}
+    };
+    // A timer to check if player kept valves in right position
+    // if two subseqent notes have the same setting
+    this->timer = new QTimer();
+    // initialize notes
+    this->set_state();
+}
 
-// A timer to check if player kept valves in right position
-// if two subseqent notes have the same setting
-QTimer *timer = new QTimer();
+void SimpleGameHandler::set_state(){
+    this->current_notes.clear();
+    this->current_notes.push_back(get_random_note(0, 46));
+    this->current_notes.push_back(get_random_note(0, 46));
+}
 
 QString SimpleGameHandler::get_current_state(){
     QString note_names;
@@ -31,21 +41,14 @@ QString SimpleGameHandler::get_current_state(){
     return note_names;
 }
 
-void SimpleGameHandler::set_state(){
-    current_notes.clear();
-    current_notes.push_back(get_random_note(0, 46));
-    current_notes.push_back(get_random_note(0, 46));
+
+void SimpleGameHandler::changeNote(){
+    this->current_notes.pop_front();
+    this->current_notes.push_back(get_random_note(0, 46));
 }
 
-void changeNote(){
-    current_notes.pop_front();
-    current_notes.push_back(get_random_note(10, 12));
-}
 
-SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
-{}
-
-void checkNote(std::string key, bool isPressed){
+void SimpleGameHandler::checkNote(std::string key, bool isPressed){
     // no matter what is the reason for this function to run
     // it should stop the timer anyway.
     timer->stop();
