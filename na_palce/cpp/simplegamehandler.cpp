@@ -57,7 +57,7 @@ void SimpleGameHandler::checkNote(std::string key, bool isPressed){
         // if correct, get new random note,
         qDebug() << "DOBRZE " << key.c_str();
     // if not, check if step in right dirrection
-    } else if (!current_notes.front().isMistake(key, isPressed)){
+    } else if (current_notes.front().isMistake(key, isPressed)){
         // if change not in right direction, mark error
         qDebug() << "BŁĄD " << key.c_str();
         // TODO increase mistakes counter
