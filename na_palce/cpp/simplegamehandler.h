@@ -31,6 +31,9 @@ private:
     // A timer to check if player kept valves in right position
     // if two subseqent notes have the same setting
     QTimer * timer;
+private slots:
+    // TODO: remove from final version
+    void debugHelper();
 };
 
 #endif // SIMPLEGAMEHANDLER_H

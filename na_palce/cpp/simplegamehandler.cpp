@@ -87,3 +87,8 @@ QString SimpleGameHandler::key_released(QString key_name)
     checkNote(key, false);
     return key_name + " released (C++) ";
 }
+
+
+void SimpleGameHandler::debugHelper(){
+    qDebug() << "debugHelper ";
+}
