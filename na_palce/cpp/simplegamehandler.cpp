@@ -52,8 +52,21 @@ void SimpleGameHandler::changeNote(){
 void SimpleGameHandler::checkNote(std::string key, bool isPressed){
     // no matter what is the reason for this function to run
     // it should stop the timer anyway.
-    timer->stop();
+    // compare current keys state with what current note type state
+    if (this->checkNoteSlot()){
+        // if correct, get new random note,
+        qDebug() << "DOBRZE " << key.c_str();
+    // if not, check if step in right dirrection
+    } else if (!current_notes.front().isMistake(key, isPressed)){
+        // if change not in right direction, mark error
+        qDebug() << "BŁĄD " << key.c_str();
+        // TODO increase mistakes counter
+    }
+}
+
 bool SimpleGameHandler::checkNoteSlot(){
+    // no matter what is the reason for this function to run
+    // it should stop the timer anyway.
     this->timer->stop();
     // compare current keys state with what current note type state
     if (current_notes.front().match(pressed)){
@@ -62,14 +75,11 @@ bool SimpleGameHandler::checkNoteSlot(){
         // new note might be using the same setting - use a timer
         // to check if user havent moved
         if (current_notes.front().match(pressed)){
-            timer->start(1000);
+            this->timer->start(1000);
         }
-    // if not, check if step in right dirrection
-    } else if (!current_notes.front().isMistake(key, isPressed)){
-        // if change not in right direction, mark error
-        qDebug() << "BŁĄD " << key.c_str();
-        // TODO increase mistakes counter
+        return true;
     }
+    return false;
 }
 
 
