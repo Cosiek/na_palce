@@ -20,6 +20,7 @@ SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
     // A timer to check if player kept valves in right position
     // if two subseqent notes have the same setting
     this->timer = new QTimer();
+    connect(this->timer, SIGNAL(timeout()), this, SLOT(checkNoteSlot()));
     // initialize notes
     this->set_state();
 }
@@ -52,6 +53,8 @@ void SimpleGameHandler::checkNote(std::string key, bool isPressed){
     // no matter what is the reason for this function to run
     // it should stop the timer anyway.
     timer->stop();
+bool SimpleGameHandler::checkNoteSlot(){
+    this->timer->stop();
     // compare current keys state with what current note type state
     if (current_notes.front().match(pressed)){
         // if correct, get new random note,

@@ -32,6 +32,7 @@ private:
     // if two subseqent notes have the same setting
     QTimer * timer;
 private slots:
+    bool checkNoteSlot();
     // TODO: remove from final version
     void debugHelper();
 };
