@@ -23,7 +23,7 @@ public:
 private:
     void set_state();
     void changeNote();
-    void checkNote(std::string, bool);
+    void checkKeyChange(std::string, bool);
     // a deque containing current notes
     std::deque<Note> current_notes;
     // currently pressed keys
@@ -32,7 +32,7 @@ private:
     // if two subseqent notes have the same setting
     QTimer * timer;
 private slots:
-    bool checkNoteSlot();
+    bool checkNote();
     // TODO: remove from final version
     void debugHelper();
 };

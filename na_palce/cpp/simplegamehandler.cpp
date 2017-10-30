@@ -20,7 +20,7 @@ SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
     // A timer to check if player kept valves in right position
     // if two subseqent notes have the same setting
     this->timer = new QTimer();
-    connect(this->timer, SIGNAL(timeout()), this, SLOT(checkNoteSlot()));
+    connect(this->timer, SIGNAL(timeout()), this, SLOT(checkNote()));
     // initialize notes
     this->set_state();
 }
@@ -49,32 +49,32 @@ void SimpleGameHandler::changeNote(){
 }
 
 
-void SimpleGameHandler::checkNote(std::string key, bool isPressed){
+void SimpleGameHandler::checkKeyChange(std::string key, bool isPressed){
     // no matter what is the reason for this function to run
     // it should stop the timer anyway.
     // compare current keys state with what current note type state
-    if (this->checkNoteSlot()){
+    if (this->checkNote()){
         // if correct, get new random note,
         qDebug() << "DOBRZE " << key.c_str();
     // if not, check if step in right dirrection
-    } else if (current_notes.front().isMistake(key, isPressed)){
+    } else if (this->current_notes.front().isMistake(key, isPressed)){
         // if change not in right direction, mark error
         qDebug() << "BŁĄD " << key.c_str();
         // TODO increase mistakes counter
     }
 }
 
-bool SimpleGameHandler::checkNoteSlot(){
+bool SimpleGameHandler::checkNote(){
     // no matter what is the reason for this function to run
     // it should stop the timer anyway.
     this->timer->stop();
     // compare current keys state with what current note type state
-    if (current_notes.front().match(pressed)){
+    if (this->current_notes.front().match(this->pressed)){
         // if correct, get new random note,
-        changeNote();
+        this->changeNote();
         // new note might be using the same setting - use a timer
         // to check if user havent moved
-        if (current_notes.front().match(pressed)){
+        if (this->current_notes.front().match(this->pressed)){
             this->timer->start(1000);
         }
         return true;
@@ -88,7 +88,7 @@ QString SimpleGameHandler::key_pressed(QString key_name)
     std::string key = key_name.toUtf8().constData();
     // set keys state
     pressed[key] = true;
-    checkNote(key, true);
+    checkKeyChange(key, true);
     return key_name + " pressed (C++)";
 }
 
@@ -97,7 +97,7 @@ QString SimpleGameHandler::key_released(QString key_name)
     std::string key = key_name.toUtf8().constData();
     // set keys state
     pressed[key] = false;
-    checkNote(key, false);
+    checkKeyChange(key, false);
     return key_name + " released (C++) ";
 }
 
