@@ -35,6 +35,9 @@ private slots:
     bool checkNote();
     // TODO: remove from final version
     void debugHelper();
+    void callTimeout();
+signals:
+    void timeout();
 };
 
 #endif // SIMPLEGAMEHANDLER_H

@@ -60,14 +60,18 @@ ApplicationWindow {
             rows: 3
             property Item defaultFocusItem: this
 
+            function renderDisplay(){
+                notes_display.text = game_handler.get_current_state()
+            }
+
             function keyPressed(keyName){
                 game_handler.key_pressed(keyName)
-                notes_display.text = game_handler.get_current_state()
+                renderDisplay()
             }
 
             function keyReleased(keyName){
                 game_handler.key_released(keyName)
-                notes_display.text = game_handler.get_current_state()
+                renderDisplay()
             }
 
             Keys.onPressed: {
@@ -133,6 +137,7 @@ ApplicationWindow {
 
             Component.onCompleted: {
                 notes_display.text = game_handler.get_current_state()
+                game_handler.timeout.connect(renderDisplay)
             }
         }
     }
