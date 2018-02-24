@@ -61,7 +61,7 @@ ApplicationWindow {
             property Item defaultFocusItem: this
 
             function renderDisplay(){
-                notes_display.text = game_handler.get_current_state()
+                notes_text.text = game_handler.get_current_state()
             }
 
             function keyPressed(keyName){
@@ -98,7 +98,7 @@ ApplicationWindow {
                 onClicked: stackView.pop()
             }
             Text {
-                id: notes_display
+                id: notes_text
                 text: "🎼\nPres any key to start."
                 font.pointSize: 36
                 anchors.left: parent.left
@@ -136,7 +136,7 @@ ApplicationWindow {
             }
 
             Component.onCompleted: {
-                notes_display.text = game_handler.get_current_state()
+                notes_text.text = game_handler.get_current_state()
                 game_handler.timeout.connect(renderDisplay)
             }
         }
