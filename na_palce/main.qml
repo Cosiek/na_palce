@@ -97,6 +97,32 @@ ApplicationWindow {
                 Layout.columnSpan: 3
                 onClicked: stackView.pop()
             }
+            Canvas {
+                id: notes_display
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                enabled: false
+                visible: true
+                contextType: "2d"
+                clip: true
+                Layout.columnSpan: 3
+
+                onPaint: {
+                    var ctx = notes_display.getContext('2d');
+
+                    ctx.save();
+                    ctx.clearRect(0, 0, notes_display.width, notes_display.height);
+                    ctx.globalCompositeOperation = "source-over";
+
+                    ctx.lineWidth = 1;
+                    ctx.path = "M 10 10 L 90 90";
+                    ctx.fillStyle = "#ff0000";
+                    ctx.fill();
+                    ctx.strokeStyle = "#00ff00";
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
             Text {
                 id: notes_text
                 text: "🎼\nPres any key to start."
@@ -137,6 +163,7 @@ ApplicationWindow {
 
             Component.onCompleted: {
                 notes_text.text = game_handler.get_current_state()
+                notes_display.requestPaint()
                 game_handler.timeout.connect(renderDisplay)
             }
         }
