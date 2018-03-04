@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import "draw_notes.js" as NotesRenderer
+
 
 ApplicationWindow {
     visible: true
@@ -61,7 +63,8 @@ ApplicationWindow {
             property Item defaultFocusItem: this
 
             function renderDisplay(){
-                notes_text.text = game_handler.get_current_state()
+                notes_text.text = game_handler.get_current_state();
+                notes_display.requestPaint();
             }
 
             function keyPressed(keyName){
@@ -109,17 +112,10 @@ ApplicationWindow {
 
                 onPaint: {
                     var ctx = notes_display.getContext('2d');
-
                     ctx.save();
                     ctx.clearRect(0, 0, notes_display.width, notes_display.height);
                     ctx.globalCompositeOperation = "source-over";
-
-                    ctx.lineWidth = 1;
-                    ctx.path = "M 10 10 L 90 90";
-                    ctx.fillStyle = "#ff0000";
-                    ctx.fill();
-                    ctx.strokeStyle = "#00ff00";
-                    ctx.stroke();
+                    NotesRenderer.render(ctx, notes_text.text, notes_display.width, notes_display.height);
                     ctx.restore();
                 }
             }
