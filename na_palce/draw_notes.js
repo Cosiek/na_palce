@@ -30,12 +30,12 @@ function scalePath(path, scale){
     for (var i in path){
         j = path[i] * scale;
         if (!isNaN(j)){
-            pth += ' ' + j
+            pth += ' ' + j;
         } else {
-            pth += path[i]
+            pth += path[i];
         }
     }
-    return pth
+    return pth;
 }
 
 
