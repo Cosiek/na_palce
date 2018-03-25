@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <QMetaType>
+
 struct keys_state{
     bool valve1, valve2, valve3;
 };
@@ -27,6 +29,10 @@ public:
     bool match(std::unordered_map<std::string, bool>);
     bool isMistake(std::string, bool);
 };
+
+Q_DECLARE_METATYPE(NoteType)
+Q_DECLARE_METATYPE(Note)
+Q_DECLARE_METATYPE(QList<Note>)
 
 extern Note get_random_note(int, int);
 
