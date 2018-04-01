@@ -126,7 +126,7 @@ class Note
 {
 public:
     int length;
-    NoteType type;
+    NoteType noteType;
     bool match(std::unordered_map<std::string, bool>);
     bool isMistake(std::string, bool);
 };
@@ -135,17 +135,17 @@ public:
 Note get_random_note(int min, int max){
     int length;
     length = LENGTHS[std::rand() % 4];
-    NoteType type = NOTE_TYPES[(std::rand() % (max - min)) + min];
-    Note note = {length, type};
+    NoteType noteType = NOTE_TYPES[(std::rand() % (max - min)) + min];
+    Note note = {length, noteType};
     return note;
 }
 
 
 bool Note::match(std::unordered_map<std::string, bool> keys){
-    return this->type.match(keys);
+    return this->noteType.match(keys);
 }
 
 
 bool Note::isMistake(std::string valve, bool isPressed){
-    return this->type.isMistake(valve, isPressed);
+    return this->noteType.isMistake(valve, isPressed);
 }
