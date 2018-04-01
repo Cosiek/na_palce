@@ -31,14 +31,15 @@ void SimpleGameHandler::set_state(){
     this->current_notes.push_back(get_random_note(0, 46));
 }
 
-QVariant SimpleGameHandler::get_current_state(){
-    QList<QVariant> notes;
+QString SimpleGameHandler::get_current_state(){
+    QString note_names;
     for(Note note : current_notes) {
-        QVariant n(Note);
-        n.setValue(note);
-        notes.append(n);
+        note_names.append(note.type.name.c_str());
+        note_names.append('+');
+        note_names.append(std::to_string(note.type.position).c_str());
+        note_names.append(' ');
     }
-    return QVariant(notes);
+    return note_names;
 }
 
 
