@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <QJsonObject>
+
 struct keys_state{
     bool valve1, valve2, valve3;
 };
@@ -129,6 +131,7 @@ public:
     NoteType noteType;
     bool match(std::unordered_map<std::string, bool>);
     bool isMistake(std::string, bool);
+    QJsonObject toQJsonObject();
 };
 
 
@@ -148,4 +151,18 @@ bool Note::match(std::unordered_map<std::string, bool> keys){
 
 bool Note::isMistake(std::string valve, bool isPressed){
     return this->noteType.isMistake(valve, isPressed);
+}
+
+
+QJsonObject Note::toQJsonObject(){
+    QJsonObject json;
+    json["length"] = length;
+    json["name"] = noteType.name.c_str();
+    json["position"] = noteType.position;
+    json["sharp"] = noteType.sharp;
+    json["flat"] = noteType.flat;
+    json["valve1"] = noteType.keys.valve1;
+    json["valve2"] = noteType.keys.valve2;
+    json["valve3"] = noteType.keys.valve3;
+    return json;
 }

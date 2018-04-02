@@ -32,14 +32,12 @@ void SimpleGameHandler::set_state(){
 }
 
 QString SimpleGameHandler::get_current_state(){
-    QString note_names;
+    QJsonArray jsonArray;
     for(Note note : current_notes) {
-        note_names.append(note.noteType.name.c_str());
-        note_names.append('+');
-        note_names.append(std::to_string(note.noteType.position).c_str());
-        note_names.append(' ');
+        jsonArray.append(note.toQJsonObject());
     }
-    return note_names;
+    QJsonDocument jsonDocument = QJsonDocument(jsonArray);
+    return jsonDocument.toJson();
 }
 
 
