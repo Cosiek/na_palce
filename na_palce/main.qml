@@ -63,8 +63,9 @@ ApplicationWindow {
             property Item defaultFocusItem: this
 
             function renderDisplay(){
-                notes_text.text = game_handler.get_current_state();
-                notes_display.requestPaint();
+                var currentState = JSON.parse(game_handler.get_current_state())
+                notes_text.text = currentState[0].name + ' ' + currentState[1].name
+                notes_display.requestPaint(currentState)
             }
 
             function keyPressed(keyName){
@@ -158,8 +159,7 @@ ApplicationWindow {
             }
 
             Component.onCompleted: {
-                notes_text.text = game_handler.get_current_state()
-                notes_display.requestPaint()
+                renderDisplay()
                 game_handler.timeout.connect(renderDisplay)
             }
         }
