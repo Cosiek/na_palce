@@ -1,18 +1,12 @@
-function render(ctx, notesString, width, height){
+function render(ctx, notesList, width, height){
     // calculate sizes
     var sizes = getSizes(width, height)
     // draw sheet elements
     drawSheet(ctx, sizes);
-    // parse notes input
-    return
-    // generate path
-    // draw
-    ctx.lineWidth = 1;
-    ctx.path = "M 10 10 L 90 90";
-    ctx.fillStyle = "#ff0000";
-    ctx.fill();
-    ctx.strokeStyle = "#00ff00";
-    ctx.stroke();
+    // draw notes
+    for (var idx in notesList){
+        drawNote(notesList[idx], Number(idx), sizes, ctx)
+    }
 }
 
 
@@ -44,13 +38,14 @@ function getSizes(width, height){
     sizes['scale'] = sizes.h / 82;
     sizes['margin'] = 3 * sizes.scale;
     sizes['lineSpacing'] = 5  * sizes.scale;
+    sizes['noteSpacing'] = sizes['lineSpacing'] * 4;
     sizes['line3y'] = height / 2;
     sizes['line2y'] = sizes['line3y'] + sizes.lineSpacing;
     sizes['line1y'] = sizes['line2y'] + sizes.lineSpacing;
     sizes['line4y'] = sizes['line3y'] - sizes.lineSpacing;
     sizes['line5y'] = sizes['line4y'] - sizes.lineSpacing;
     sizes['clefOffset'] = 13 * sizes.scale;
-    sizes['note1Offset'] = width / 2;
+    sizes['notesOffset'] = sizes['clefOffset'];
     for (var key in PATHS){
         sizes['paths'][key] = scalePath(PATHS[key], sizes.scale);
     }
@@ -78,6 +73,26 @@ function drawSheet(ctx, sizes){
     path = "M" + (sizes.margin + sizes.clefOffset) + " " + sizes.line3y + " ";
     path += sizes.paths.clef
     ctx.path = path;
+    ctx.fill();
+    ctx.stroke();
+}
+
+
+function isOdd(num) { return Boolean(num % 2);}
+
+
+function drawNote(definition, idx, sizes, ctx){
+    // get vertical offset (note: line3 = position 6)
+    var vOffset = sizes.line3y + (6 - definition.position) * sizes.lineSpacing / 2;
+    // get horizontal offset
+    var hOffset = sizes.noteSpacing * (idx + 1) + sizes.notesOffset;
+    // no point drawing if note is outside of drawing region
+    if (hOffset > sizes.w){return null}
+    // choose note path name
+    var pth = definition.position < 7 ? sizes.paths["1/4"] : sizes.paths["1/4↓"];
+    // draw note
+    var path = "M" + hOffset + " " + vOffset + " ";
+    ctx.path = path + pth;
     ctx.fill();
     ctx.stroke();
 }

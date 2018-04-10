@@ -65,7 +65,8 @@ ApplicationWindow {
             function renderDisplay(){
                 var currentState = JSON.parse(game_handler.get_current_state())
                 notes_text.text = currentState[0].name + ' ' + currentState[1].name
-                notes_display.requestPaint(currentState)
+                notes_display.currentState = currentState
+                notes_display.requestPaint()
             }
 
             function keyPressed(keyName){
@@ -110,13 +111,14 @@ ApplicationWindow {
                 contextType: "2d"
                 clip: true
                 Layout.columnSpan: 3
+                property var currentState: []
 
                 onPaint: {
                     var ctx = notes_display.getContext('2d');
                     ctx.save();
                     ctx.clearRect(0, 0, notes_display.width, notes_display.height);
                     ctx.globalCompositeOperation = "source-over";
-                    NotesRenderer.render(ctx, notes_text.text, notes_display.width, notes_display.height);
+                    NotesRenderer.render(ctx, this.currentState, notes_display.width, notes_display.height);
                     ctx.restore();
                 }
             }
