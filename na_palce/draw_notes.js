@@ -46,6 +46,7 @@ function getSizes(width, height){
     sizes['line5y'] = sizes['line4y'] - sizes.lineSpacing;
     sizes['clefOffset'] = 13 * sizes.scale;
     sizes['notesOffset'] = sizes['clefOffset'];
+    sizes['helperLineWidth'] = 13 * sizes.scale;
     for (var key in PATHS){
         sizes['paths'][key] = scalePath(PATHS[key], sizes.scale);
     }
@@ -95,4 +96,11 @@ function drawNote(definition, idx, sizes, ctx){
     ctx.path = path + pth;
     ctx.fill();
     ctx.stroke();
+    // draw additional short lines (if needed)
+    if (!isOdd(definition.position) && (definition.position <= 0 || definition.position > 11)){
+        var lineHOffset = hOffset - (sizes.helperLineWidth / 2)
+        ctx.moveTo(lineHOffset, vOffset)
+        ctx.lineTo(lineHOffset + sizes.helperLineWidth, vOffset)
+        ctx.stroke();
+    }
 }
