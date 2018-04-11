@@ -97,10 +97,25 @@ function drawNote(definition, idx, sizes, ctx){
     ctx.fill();
     ctx.stroke();
     // draw additional short lines (if needed)
-    if (!isOdd(definition.position) && (definition.position <= 0 || definition.position > 11)){
-        var lineHOffset = hOffset - (sizes.helperLineWidth / 2)
-        ctx.moveTo(lineHOffset, vOffset)
-        ctx.lineTo(lineHOffset + sizes.helperLineWidth, vOffset)
+    var i = 0;
+    var lineHOffset = hOffset - (sizes.helperLineWidth / 2);
+    var vo = 0;
+    if (definition.position <= 0){
+        while (i >= definition.position){
+            vo = sizes.line3y + (6 - i) * sizes.lineSpacing / 2;
+            ctx.moveTo(lineHOffset, vo);
+            ctx.lineTo(lineHOffset + sizes.helperLineWidth, vo);
+            i -= 2;
+        }
+        ctx.stroke();
+    } else if (definition.position >= 12){
+        i = 12;
+        while (i <= definition.position){
+            vo = sizes.line3y + (6 - i) * sizes.lineSpacing / 2;
+            ctx.moveTo(lineHOffset, vo);
+            ctx.lineTo(lineHOffset + sizes.helperLineWidth, vo);
+            i += 2;
+        }
         ctx.stroke();
     }
 }
