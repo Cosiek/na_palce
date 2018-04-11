@@ -115,6 +115,10 @@ function drawNote(definition, idx, sizes, ctx){
             ctx.moveTo(lineHOffset, vo);
             ctx.lineTo(lineHOffset + sizes.helperLineWidth, vo);
             i += 2;
+            if (i > 100){
+                for (var idx3 in definition){console.log(idx3, definition[idx2])}
+                break;
+            }
         }
         ctx.stroke();
     }
