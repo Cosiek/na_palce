@@ -138,7 +138,7 @@ public:
 Note get_random_note(int min, int max){
     int length;
     length = LENGTHS[std::rand() % 4];
-    NoteType noteType = NOTE_TYPES[(std::rand() % (max - min)) + min];
+    NoteType noteType = NOTE_TYPES[std::rand() % (max - min) + min];
     Note note = {length, noteType};
     return note;
 }

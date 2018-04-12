@@ -27,8 +27,8 @@ SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
 
 void SimpleGameHandler::set_state(){
     this->current_notes.clear();
-    this->current_notes.push_back(get_random_note(0, 46));
-    this->current_notes.push_back(get_random_note(0, 46));
+    this->current_notes.push_back(get_random_note(0, 45));
+    this->current_notes.push_back(get_random_note(0, 45));
 }
 
 QString SimpleGameHandler::get_current_state(){
@@ -43,7 +43,7 @@ QString SimpleGameHandler::get_current_state(){
 
 void SimpleGameHandler::changeNote(){
     this->current_notes.pop_front();
-    this->current_notes.push_back(get_random_note(0, 46));
+    this->current_notes.push_back(get_random_note(0, 45));
 }
 
 
