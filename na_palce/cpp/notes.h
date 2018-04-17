@@ -23,9 +23,10 @@ class Note
 {
 public:
     int length;
-    NoteType type;
+    NoteType noteType;
     bool match(std::unordered_map<std::string, bool>);
     bool isMistake(std::string, bool);
+    QJsonObject toQJsonObject();
 };
 
 extern Note get_random_note(int, int);

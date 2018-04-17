@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import "draw_notes.js" as NotesRenderer
+
 
 ApplicationWindow {
     visible: true
@@ -61,7 +63,10 @@ ApplicationWindow {
             property Item defaultFocusItem: this
 
             function renderDisplay(){
-                notes_display.text = game_handler.get_current_state()
+                var currentState = JSON.parse(game_handler.get_current_state())
+                notes_text.text = currentState[0].name + ' ' + currentState[1].name
+                notes_display.currentState = currentState
+                notes_display.requestPaint()
             }
 
             function keyPressed(keyName){
@@ -97,8 +102,28 @@ ApplicationWindow {
                 Layout.columnSpan: 3
                 onClicked: stackView.pop()
             }
-            Text {
+            Canvas {
                 id: notes_display
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                enabled: false
+                visible: true
+                contextType: "2d"
+                clip: true
+                Layout.columnSpan: 3
+                property var currentState: []
+
+                onPaint: {
+                    var ctx = notes_display.getContext('2d');
+                    ctx.save();
+                    ctx.clearRect(0, 0, notes_display.width, notes_display.height);
+                    ctx.globalCompositeOperation = "source-over";
+                    NotesRenderer.render(ctx, this.currentState, notes_display.width, notes_display.height);
+                    ctx.restore();
+                }
+            }
+            Text {
+                id: notes_text
                 text: "🎼\nPres any key to start."
                 font.pointSize: 36
                 anchors.left: parent.left
@@ -136,7 +161,7 @@ ApplicationWindow {
             }
 
             Component.onCompleted: {
-                notes_display.text = game_handler.get_current_state()
+                renderDisplay()
                 game_handler.timeout.connect(renderDisplay)
             }
         }

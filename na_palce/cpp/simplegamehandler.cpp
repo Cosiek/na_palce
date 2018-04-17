@@ -27,25 +27,23 @@ SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
 
 void SimpleGameHandler::set_state(){
     this->current_notes.clear();
-    this->current_notes.push_back(get_random_note(0, 46));
-    this->current_notes.push_back(get_random_note(0, 46));
+    this->current_notes.push_back(get_random_note(0, 45));
+    this->current_notes.push_back(get_random_note(0, 45));
 }
 
 QString SimpleGameHandler::get_current_state(){
-    QString note_names;
+    QJsonArray jsonArray;
     for(Note note : current_notes) {
-        note_names.append(note.type.name.c_str());
-        note_names.append('+');
-        note_names.append(std::to_string(note.type.position).c_str());
-        note_names.append(' ');
+        jsonArray.append(note.toQJsonObject());
     }
-    return note_names;
+    QJsonDocument jsonDocument = QJsonDocument(jsonArray);
+    return jsonDocument.toJson();
 }
 
 
 void SimpleGameHandler::changeNote(){
     this->current_notes.pop_front();
-    this->current_notes.push_back(get_random_note(0, 46));
+    this->current_notes.push_back(get_random_note(0, 45));
 }
 
 
