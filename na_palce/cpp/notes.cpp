@@ -54,7 +54,7 @@ extern const std::array<NoteType, 45> NOTE_TYPES = {
     NoteType(2, "bE", {false, true, true}, false, true),
     NoteType(2, "E", {true, true, false}, false, false),
     NoteType(3, "F", {true, false, false}, false, false),
-    NoteType(3, "#F", {false, true, false}, false, true),
+    NoteType(3, "#F", {false, true, false}, true, false),
     NoteType(4, "bG", {false, true, false}, false, true),
     NoteType(4, "G", {false, false, false}, false, false),
     NoteType(4, "#G", {false, true, true}, true, false),
