@@ -1,8 +1,9 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
 
 import "draw_notes.js" as NotesRenderer
+import Qt.labs.handlers 1.0
 
 
 ApplicationWindow {
@@ -79,6 +80,11 @@ ApplicationWindow {
                 renderDisplay()
             }
 
+            function buttonPressedChanged(keyName, pressed){
+                if (pressed){keyPressed(keyName)}
+                else {keyReleased(keyName)}
+            }
+
             Keys.onPressed: {
                 if (event.isAutoRepeat){return null}
                 if (event.key === Qt.Key_Left){keyPressed("valve1")}
@@ -138,8 +144,10 @@ ApplicationWindow {
                 text: "1"
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: keyPressed("valve1")
-                onReleased: keyReleased("valve1")
+                TapHandler {
+                    acceptedDevices: PointerDevice.AllPointerTypes
+                    onPressedChanged: buttonPressedChanged("valve1", pressed)
+                }
             }
             Button {
                 id: valve2
@@ -147,8 +155,10 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: keyPressed("valve2")
-                onReleased: keyReleased("valve2")
+                TapHandler {
+                    acceptedDevices: PointerDevice.AllPointerTypes
+                    onPressedChanged: buttonPressedChanged("valve2", pressed)
+                }
             }
             Button {
                 id: valve3
@@ -156,8 +166,10 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                onPressed: keyPressed("valve3")
-                onReleased: keyReleased("valve3")
+                TapHandler {
+                    acceptedDevices: PointerDevice.AllPointerTypes
+                    onPressedChanged: buttonPressedChanged("valve3", pressed)
+                }
             }
 
             Component.onCompleted: {
