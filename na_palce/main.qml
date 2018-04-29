@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
+import QtQuick.Window 2.2
 
 import "draw_notes.js" as NotesRenderer
 import Qt.labs.handlers 1.0
@@ -62,6 +63,8 @@ ApplicationWindow {
             columns: 3
             rows: 3
             property Item defaultFocusItem: this
+            property double basePixelDensity: 4.42
+            property double pixelDensityScale: Screen.pixelDensity / basePixelDensity
 
             function renderDisplay(){
                 var currentState = JSON.parse(game_handler.get_current_state())
@@ -142,8 +145,8 @@ ApplicationWindow {
             Button {
                 id: valve1
                 text: "1"
-                Layout.preferredHeight: 40
-                Layout.preferredWidth: 40
+                Layout.preferredHeight: 60 * parent.pixelDensityScale
+                Layout.preferredWidth: 60 * parent.pixelDensityScale
                 TapHandler {
                     acceptedDevices: PointerDevice.AllPointerTypes
                     onPressedChanged: buttonPressedChanged("valve1", pressed)
@@ -153,8 +156,8 @@ ApplicationWindow {
                 id: valve2
                 text: "2"
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.preferredHeight: 40
-                Layout.preferredWidth: 40
+                Layout.preferredHeight: 60 * parent.pixelDensityScale
+                Layout.preferredWidth: 60 * parent.pixelDensityScale
                 TapHandler {
                     acceptedDevices: PointerDevice.AllPointerTypes
                     onPressedChanged: buttonPressedChanged("valve2", pressed)
@@ -164,8 +167,8 @@ ApplicationWindow {
                 id: valve3
                 text: "3"
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                Layout.preferredHeight: 40
-                Layout.preferredWidth: 40
+                Layout.preferredHeight: 60 * parent.pixelDensityScale
+                Layout.preferredWidth: 60 * parent.pixelDensityScale
                 TapHandler {
                     acceptedDevices: PointerDevice.AllPointerTypes
                     onPressedChanged: buttonPressedChanged("valve3", pressed)
