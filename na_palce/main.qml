@@ -83,11 +83,6 @@ ApplicationWindow {
                 renderDisplay()
             }
 
-            function buttonPressedChanged(keyName, pressed){
-                if (pressed){keyPressed(keyName)}
-                else {keyReleased(keyName)}
-            }
-
             Keys.onPressed: {
                 if (event.isAutoRepeat){return null}
                 if (event.key === Qt.Key_Left){keyPressed("valve1")}
@@ -147,9 +142,13 @@ ApplicationWindow {
                 text: "1"
                 Layout.preferredHeight: 60 * parent.pixelDensityScale
                 Layout.preferredWidth: 60 * parent.pixelDensityScale
-                TapHandler {
-                    acceptedDevices: PointerDevice.AllPointerTypes
-                    onPressedChanged: buttonPressedChanged("valve1", pressed)
+                checkable: true
+                checked: tp_valve1.pressed
+                MultiPointTouchArea{
+                    anchors.fill: parent
+                    touchPoints: TouchPoint { id: tp_valve1 }
+                    onPressed: keyPressed("valve1")
+                    onReleased: keyReleased("valve1")
                 }
             }
             Button {
@@ -158,9 +157,13 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.preferredHeight: 60 * parent.pixelDensityScale
                 Layout.preferredWidth: 60 * parent.pixelDensityScale
-                TapHandler {
-                    acceptedDevices: PointerDevice.AllPointerTypes
-                    onPressedChanged: buttonPressedChanged("valve2", pressed)
+                checkable: true
+                checked: tp_valve2.pressed
+                MultiPointTouchArea{
+                    anchors.fill: parent
+                    touchPoints: TouchPoint { id: tp_valve2 }
+                    onPressed: keyPressed("valve2")
+                    onReleased: keyReleased("valve2")
                 }
             }
             Button {
@@ -169,9 +172,13 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Layout.preferredHeight: 60 * parent.pixelDensityScale
                 Layout.preferredWidth: 60 * parent.pixelDensityScale
-                TapHandler {
-                    acceptedDevices: PointerDevice.AllPointerTypes
-                    onPressedChanged: buttonPressedChanged("valve3", pressed)
+                checkable: true
+                checked: tp_valve3.pressed
+                MultiPointTouchArea{
+                    anchors.fill: parent
+                    touchPoints: TouchPoint { id: tp_valve3 }
+                    onPressed: keyPressed("valve3")
+                    onReleased: keyReleased("valve3")
                 }
             }
 
