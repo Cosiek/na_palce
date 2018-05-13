@@ -88,6 +88,7 @@ ApplicationWindow {
                 if (event.key === Qt.Key_Left){keyPressed("valve1")}
                 else if (event.key === Qt.Key_Down){keyPressed("valve2")}
                 else if (event.key === Qt.Key_Right){keyPressed("valve3")}
+                else {return null}
                 event.accepted = true;
             }
 
@@ -96,6 +97,9 @@ ApplicationWindow {
                 if (event.key === Qt.Key_Left){keyReleased("valve1")}
                 else if (event.key === Qt.Key_Down){keyReleased("valve2")}
                 else if (event.key === Qt.Key_Right){keyReleased("valve3")}
+                // make back button work
+                else if (event.key === Qt.Key_Back){stackView.pop()}
+                else {return null}
                 event.accepted = true;
             }
 
