@@ -189,6 +189,7 @@ ApplicationWindow {
             Component.onCompleted: {
                 renderDisplay()
                 game_handler.timeout.connect(renderDisplay)
+                game_handler.gameTimeout.connect(function(){stackView.pop()})
             }
         }
     }
