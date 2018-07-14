@@ -31,13 +31,17 @@ private:
     // A timer to check if player kept valves in right position
     // if two subseqent notes have the same setting
     QTimer * timer;
+    // A timer to check game duration time
+    QTimer * gameTimer;
 private slots:
     bool checkNote();
     // TODO: remove from final version
     void debugHelper();
     void callTimeout();
+    void callGameTimeout();
 signals:
     void timeout();
+    void gameTimeout();
 };
 
 #endif // SIMPLEGAMEHANDLER_H

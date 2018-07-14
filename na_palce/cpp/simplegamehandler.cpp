@@ -21,6 +21,9 @@ SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
     // if two subseqent notes have the same setting
     this->timer = new QTimer();
     connect(this->timer, SIGNAL(timeout()), this, SLOT(callTimeout()));
+    // A timer to keep track of game time
+    this->gameTimer = new QTimer();
+    connect(this->gameTimer, SIGNAL(timeout()), this, SLOT(callGameTimeout()));
     // initialize notes
     this->set_state();
 }
@@ -48,9 +51,10 @@ void SimpleGameHandler::changeNote(){
 
 
 void SimpleGameHandler::checkKeyChange(std::string key, bool isPressed){
-    // no matter what is the reason for this function to run
-    // it should stop the timer anyway.
     // compare current keys state with what current note type state
+    if (! this->gameTimer->isActive()){
+        this->gameTimer->start(60000);
+    }
     if (this->checkNote()){
         // if correct, get new random note,
         qDebug() << "DOBRZE " << key.c_str();
@@ -85,6 +89,13 @@ void SimpleGameHandler::callTimeout(){
     this->checkNote();
     emit timeout();
 }
+
+
+void SimpleGameHandler::callGameTimeout(){
+    this->gameTimer->stop();
+    emit gameTimeout();
+}
+
 
 QString SimpleGameHandler::key_pressed(QString key_name)
 {
