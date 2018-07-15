@@ -3,8 +3,8 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    cpp/simplegamehandler.cpp \
-    cpp/notes.cpp
+    cpp/notes.cpp \
+    cpp/gamehandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -31,5 +31,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    cpp/simplegamehandler.h \
-    cpp/notes.h
+    cpp/notes.h \
+    cpp/gamehandler.h

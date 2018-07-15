@@ -5,11 +5,11 @@
 #include <QObject>
 #include <QtQuick>
 
-#include "simplegamehandler.h"
+#include "gamehandler.h"
 #include "notes.h"
 
 
-SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
+GameHandler::GameHandler(QObject *parent) : QObject(parent)
 {
     // currently pressed keys
     this->pressed = {
@@ -26,13 +26,13 @@ SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
     connect(this->gameTimer, SIGNAL(timeout()), this, SLOT(callGameTimeout()));
 }
 
-void SimpleGameHandler::set_state(){
+void GameHandler::set_state(){
     this->current_notes.clear();
     this->current_notes.push_back(get_random_note(0, 45));
     this->current_notes.push_back(get_random_note(0, 45));
 }
 
-QString SimpleGameHandler::get_current_state(){
+QString GameHandler::get_current_state(){
     QJsonArray jsonArray;
     for(Note note : current_notes) {
         jsonArray.append(note.toQJsonObject());
@@ -42,13 +42,13 @@ QString SimpleGameHandler::get_current_state(){
 }
 
 
-void SimpleGameHandler::changeNote(){
+void GameHandler::changeNote(){
     this->current_notes.pop_front();
     this->current_notes.push_back(get_random_note(0, 45));
 }
 
 
-void SimpleGameHandler::checkKeyChange(std::string key, bool isPressed){
+void GameHandler::checkKeyChange(std::string key, bool isPressed){
     // compare current keys state with what current note type state
     if (! this->gameTimer->isActive()){
         this->gameTimer->start(60000);
@@ -64,7 +64,7 @@ void SimpleGameHandler::checkKeyChange(std::string key, bool isPressed){
     }
 }
 
-bool SimpleGameHandler::checkNote(){
+bool GameHandler::checkNote(){
     // no matter what is the reason for this function to run
     // it should stop the timer anyway.
     this->timer->stop();
@@ -83,19 +83,19 @@ bool SimpleGameHandler::checkNote(){
 }
 
 
-void SimpleGameHandler::callTimeout(){
+void GameHandler::callTimeout(){
     this->checkNote();
     emit timeout();
 }
 
 
-void SimpleGameHandler::callGameTimeout(){
+void GameHandler::callGameTimeout(){
     this->gameTimer->stop();
     emit gameTimeout();
 }
 
 
-QString SimpleGameHandler::key_pressed(QString key_name)
+QString GameHandler::key_pressed(QString key_name)
 {
     std::string key = key_name.toUtf8().constData();
     // set keys state
@@ -104,7 +104,7 @@ QString SimpleGameHandler::key_pressed(QString key_name)
     return key_name + " pressed (C++)";
 }
 
-QString SimpleGameHandler::key_released(QString key_name)
+QString GameHandler::key_released(QString key_name)
 {
     std::string key = key_name.toUtf8().constData();
     // set keys state
@@ -114,6 +114,6 @@ QString SimpleGameHandler::key_released(QString key_name)
 }
 
 
-void SimpleGameHandler::debugHelper(){
+void GameHandler::debugHelper(){
     qDebug() << "debugHelper ";
 }

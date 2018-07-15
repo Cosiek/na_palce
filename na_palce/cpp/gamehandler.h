@@ -1,5 +1,5 @@
-#ifndef SIMPLEGAMEHANDLER_H
-#define SIMPLEGAMEHANDLER_H
+#ifndef GAMEHANDLER_H
+#define GAMEHANDLER_H
 
 #include <deque>
 #include <unordered_map>
@@ -11,11 +11,11 @@
 #include "notes.h"
 
 
-class SimpleGameHandler: public QObject
+class GameHandler: public QObject
 {
     Q_OBJECT
 public:
-    explicit SimpleGameHandler(QObject *parent = nullptr);
+    explicit GameHandler(QObject *parent = nullptr);
 
     Q_INVOKABLE QString get_current_state();
     Q_INVOKABLE QString key_pressed(QString);
@@ -44,4 +44,4 @@ signals:
     void gameTimeout();
 };
 
-#endif // SIMPLEGAMEHANDLER_H
+#endif // GAMEHANDLER_H
