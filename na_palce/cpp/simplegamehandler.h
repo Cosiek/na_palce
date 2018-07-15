@@ -20,8 +20,8 @@ public:
     Q_INVOKABLE QString get_current_state();
     Q_INVOKABLE QString key_pressed(QString);
     Q_INVOKABLE QString key_released(QString);
+    Q_INVOKABLE void set_state();
 private:
-    void set_state();
     void changeNote();
     void checkKeyChange(std::string, bool);
     // a deque containing current notes

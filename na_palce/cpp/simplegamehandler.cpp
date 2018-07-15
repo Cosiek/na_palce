@@ -24,8 +24,6 @@ SimpleGameHandler::SimpleGameHandler(QObject *parent) : QObject(parent)
     // A timer to keep track of game time
     this->gameTimer = new QTimer();
     connect(this->gameTimer, SIGNAL(timeout()), this, SLOT(callGameTimeout()));
-    // initialize notes
-    this->set_state();
 }
 
 void SimpleGameHandler::set_state(){
