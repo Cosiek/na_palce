@@ -189,8 +189,8 @@ ApplicationWindow {
             Component.onCompleted: {
                 game_handler.init_new_game()
                 renderDisplay()
-                game_handler.timeout.connect(renderDisplay)
-                game_handler.gameTimeout.connect(function(){stackView.pop()})
+                game_handler.same_note_signal.connect(renderDisplay)
+                game_handler.game_tick_signal.connect(function(){stackView.pop()})
             }
         }
     }

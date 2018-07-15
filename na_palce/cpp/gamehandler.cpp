@@ -19,18 +19,23 @@ GameHandler::GameHandler(QObject *parent) : QObject(parent)
     };
     // A timer to check if player kept valves in right position
     // if two subseqent notes have the same setting
-    this->timer = new QTimer();
-    connect(this->timer, SIGNAL(timeout()), this, SLOT(callTimeout()));
+    this->same_note_timer = new QTimer();
+    connect(this->same_note_timer, SIGNAL(timeout()), this, SLOT(same_note_timeout()));
     // A timer to keep track of game time
-    this->gameTimer = new QTimer();
-    connect(this->gameTimer, SIGNAL(timeout()), this, SLOT(callGameTimeout()));
+    this->tick_timer = new QTimer();
+    connect(this->tick_timer, SIGNAL(timeout()), this, SLOT(game_tick_timeout()));
 }
+
+/*
+ * Interface functions --------------------------------------------------------
+ */
 
 void GameHandler::init_new_game(){
     this->current_notes.clear();
     this->current_notes.push_back(get_random_note(0, 45));
     this->current_notes.push_back(get_random_note(0, 45));
 }
+
 
 QString GameHandler::get_current_state(){
     QJsonArray jsonArray;
@@ -42,18 +47,51 @@ QString GameHandler::get_current_state(){
 }
 
 
-void GameHandler::changeNote(){
-    this->current_notes.pop_front();
-    this->current_notes.push_back(get_random_note(0, 45));
+QString GameHandler::key_pressed(QString key_name)
+{
+    std::string key = key_name.toUtf8().constData();
+    // set keys state
+    pressed[key] = true;
+    check_key_change(key, true);
+    return key_name + " pressed (C++)";
 }
 
 
-void GameHandler::checkKeyChange(std::string key, bool isPressed){
+QString GameHandler::key_released(QString key_name)
+{
+    std::string key = key_name.toUtf8().constData();
+    // set keys state
+    pressed[key] = false;
+    check_key_change(key, false);
+    return key_name + " released (C++) ";
+}
+
+/*
+ * Signals --------------------------------------------------------------------
+ */
+
+void GameHandler::same_note_timeout(){
+    this->check_note();
+    emit same_note_signal();
+}
+
+
+void GameHandler::game_tick_timeout(){
+    this->tick_timer->stop();
+    emit game_tick_signal();
+}
+
+
+/*
+ * Private functions ----------------------------------------------------------
+ */
+
+void GameHandler::check_key_change(std::string key, bool isPressed){
     // compare current keys state with what current note type state
-    if (! this->gameTimer->isActive()){
-        this->gameTimer->start(60000);
+    if (! this->tick_timer->isActive()){
+        this->tick_timer->start(60000);
     }
-    if (this->checkNote()){
+    if (this->check_note()){
         // if correct, get new random note,
         qDebug() << "DOBRZE " << key.c_str();
     // if not, check if step in right dirrection
@@ -64,18 +102,23 @@ void GameHandler::checkKeyChange(std::string key, bool isPressed){
     }
 }
 
-bool GameHandler::checkNote(){
+void GameHandler::change_note(){
+    this->current_notes.pop_front();
+    this->current_notes.push_back(get_random_note(0, 45));
+}
+
+bool GameHandler::check_note(){
     // no matter what is the reason for this function to run
     // it should stop the timer anyway.
-    this->timer->stop();
+    this->same_note_timer->stop();
     // compare current keys state with what current note type state
     if (this->current_notes.front().match(this->pressed)){
         // if correct, get new random note,
-        this->changeNote();
+        this->change_note();
         // new note might be using the same setting - use a timer
         // to check if user havent moved
         if (this->current_notes.front().match(this->pressed)){
-            this->timer->start(1000);
+            this->same_note_timer->start(1000);
         }
         return true;
     }
@@ -83,37 +126,6 @@ bool GameHandler::checkNote(){
 }
 
 
-void GameHandler::callTimeout(){
-    this->checkNote();
-    emit timeout();
-}
-
-
-void GameHandler::callGameTimeout(){
-    this->gameTimer->stop();
-    emit gameTimeout();
-}
-
-
-QString GameHandler::key_pressed(QString key_name)
-{
-    std::string key = key_name.toUtf8().constData();
-    // set keys state
-    pressed[key] = true;
-    checkKeyChange(key, true);
-    return key_name + " pressed (C++)";
-}
-
-QString GameHandler::key_released(QString key_name)
-{
-    std::string key = key_name.toUtf8().constData();
-    // set keys state
-    pressed[key] = false;
-    checkKeyChange(key, false);
-    return key_name + " released (C++) ";
-}
-
-
-void GameHandler::debugHelper(){
-    qDebug() << "debugHelper ";
+void GameHandler::debug_helper(){
+    qDebug() << "debug_helper ";
 }
