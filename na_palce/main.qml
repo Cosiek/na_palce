@@ -68,7 +68,13 @@ ApplicationWindow {
 
             function renderDisplay(){
                 var currentState = JSON.parse(game_handler.get_current_state())
-                notes_text.text = currentState.state + ' ' + currentState.notes[0].name + ' ' + currentState.notes[1].name
+                // notes_text.text = currentState.state + ' ' + currentState.notes[0].name + ' ' + currentState.notes[1].name
+                notes_text.text = currentState.state + ' ' + currentState.time_left
+                if (currentState.state === "stoped" && currentState.time_left === 0){
+                    // TODO: move this to somewhere more appropriate
+                    stackView.pop()
+                    return
+                }
                 notes_display.currentState = currentState.notes
                 notes_display.requestPaint()
             }
@@ -190,7 +196,7 @@ ApplicationWindow {
                 game_handler.init_new_game()
                 renderDisplay()
                 game_handler.same_note_signal.connect(renderDisplay)
-                game_handler.game_tick_signal.connect(function(){stackView.pop()})
+                game_handler.game_tick_signal.connect(renderDisplay)
             }
         }
     }

@@ -35,11 +35,13 @@ void GameHandler::init_new_game(){
     this->current_notes.push_back(get_random_note(0, 45));
     this->current_notes.push_back(get_random_note(0, 45));
     this->state = QString("pending");
+    this->time_left = 0;
 }
 
 QString GameHandler::get_current_state(){
     QJsonObject stateObject;
     stateObject.insert("state", QJsonValue::fromVariant(this->state));
+    stateObject.insert("time_left", QJsonValue::fromVariant(this->time_left));
 
     QJsonArray notesArray;
     for(Note note : current_notes) {
@@ -79,8 +81,11 @@ void GameHandler::same_note_timeout(){
 }
 
 void GameHandler::game_tick_timeout(){
-    this->tick_timer->stop();
-    this->state = QString("stoped");
+    this->time_left -= 1;
+    if (this->time_left == 0){
+        this->tick_timer->stop();
+        this->state = QString("stoped");
+    }
     emit game_tick_signal();
 }
 
@@ -92,7 +97,8 @@ void GameHandler::check_key_change(std::string key, bool isPressed){
     // compare current keys state with what current note type state
     if (! this->tick_timer->isActive()){
         this->state = QString("running");
-        this->tick_timer->start(60000);
+        this->time_left = 60;
+        this->tick_timer->start(1000);
     }
     if (this->check_note()){
         // if correct, get new random note,
