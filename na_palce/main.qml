@@ -68,8 +68,8 @@ ApplicationWindow {
 
             function renderDisplay(){
                 var currentState = JSON.parse(game_handler.get_current_state())
-                notes_text.text = currentState[0].name + ' ' + currentState[1].name
-                notes_display.currentState = currentState
+                notes_text.text = currentState.state + ' ' + currentState.notes[0].name + ' ' + currentState.notes[1].name
+                notes_display.currentState = currentState.notes
                 notes_display.requestPaint()
             }
 
