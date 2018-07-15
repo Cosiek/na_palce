@@ -35,6 +35,7 @@ private:
     QTimer * same_note_timer;
     // A timer to check game duration time
     QTimer * tick_timer;
+    int time_left;
 private slots:
     bool check_note();
     void debug_helper();  // TODO: remove from final version
