@@ -34,18 +34,22 @@ void GameHandler::init_new_game(){
     this->current_notes.clear();
     this->current_notes.push_back(get_random_note(0, 45));
     this->current_notes.push_back(get_random_note(0, 45));
+    this->state = QString("pending");
 }
-
 
 QString GameHandler::get_current_state(){
-    QJsonArray jsonArray;
+    QJsonObject stateObject;
+    stateObject.insert("state", QJsonValue::fromVariant(this->state));
+
+    QJsonArray notesArray;
     for(Note note : current_notes) {
-        jsonArray.append(note.toQJsonObject());
+        notesArray.append(note.toQJsonObject());
     }
-    QJsonDocument jsonDocument = QJsonDocument(jsonArray);
+    stateObject.insert("notes", notesArray);
+
+    QJsonDocument jsonDocument = QJsonDocument(stateObject);
     return jsonDocument.toJson();
 }
-
 
 QString GameHandler::key_pressed(QString key_name)
 {
@@ -55,7 +59,6 @@ QString GameHandler::key_pressed(QString key_name)
     check_key_change(key, true);
     return key_name + " pressed (C++)";
 }
-
 
 QString GameHandler::key_released(QString key_name)
 {
@@ -75,12 +78,11 @@ void GameHandler::same_note_timeout(){
     emit same_note_signal();
 }
 
-
 void GameHandler::game_tick_timeout(){
     this->tick_timer->stop();
+    this->state = QString("stoped");
     emit game_tick_signal();
 }
-
 
 /*
  * Private functions ----------------------------------------------------------
@@ -89,6 +91,7 @@ void GameHandler::game_tick_timeout(){
 void GameHandler::check_key_change(std::string key, bool isPressed){
     // compare current keys state with what current note type state
     if (! this->tick_timer->isActive()){
+        this->state = QString("running");
         this->tick_timer->start(60000);
     }
     if (this->check_note()){
@@ -124,7 +127,6 @@ bool GameHandler::check_note(){
     }
     return false;
 }
-
 
 void GameHandler::debug_helper(){
     qDebug() << "debug_helper ";

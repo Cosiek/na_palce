@@ -26,6 +26,8 @@ private:
     void check_key_change(std::string, bool);
     // a deque containing current notes
     std::deque<Note> current_notes;
+    // available states: "pending", "running", "stopped"
+    QString state;
     // currently pressed keys
     std::unordered_map<std::string, bool> pressed;
     // A timer to check if player kept valves in right position
