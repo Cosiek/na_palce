@@ -17,10 +17,10 @@ class GameHandler: public QObject
 public:
     explicit GameHandler(QObject *parent = nullptr);
 
+    Q_INVOKABLE void init_new_game();
     Q_INVOKABLE QString get_current_state();
     Q_INVOKABLE QString key_pressed(QString);
     Q_INVOKABLE QString key_released(QString);
-    Q_INVOKABLE void set_state();
 private:
     void changeNote();
     void checkKeyChange(std::string, bool);

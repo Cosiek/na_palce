@@ -26,7 +26,7 @@ GameHandler::GameHandler(QObject *parent) : QObject(parent)
     connect(this->gameTimer, SIGNAL(timeout()), this, SLOT(callGameTimeout()));
 }
 
-void GameHandler::set_state(){
+void GameHandler::init_new_game(){
     this->current_notes.clear();
     this->current_notes.push_back(get_random_note(0, 45));
     this->current_notes.push_back(get_random_note(0, 45));
