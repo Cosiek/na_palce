@@ -22,26 +22,25 @@ public:
     Q_INVOKABLE QString key_pressed(QString);
     Q_INVOKABLE QString key_released(QString);
 private:
-    void changeNote();
-    void checkKeyChange(std::string, bool);
+    void change_note();
+    void check_key_change(std::string, bool);
     // a deque containing current notes
     std::deque<Note> current_notes;
     // currently pressed keys
     std::unordered_map<std::string, bool> pressed;
     // A timer to check if player kept valves in right position
     // if two subseqent notes have the same setting
-    QTimer * timer;
+    QTimer * same_note_timer;
     // A timer to check game duration time
-    QTimer * gameTimer;
+    QTimer * tick_timer;
 private slots:
-    bool checkNote();
-    // TODO: remove from final version
-    void debugHelper();
-    void callTimeout();
-    void callGameTimeout();
+    bool check_note();
+    void debug_helper();  // TODO: remove from final version
+    void same_note_timeout();
+    void game_tick_timeout();
 signals:
-    void timeout();
-    void gameTimeout();
+    void same_note_signal();
+    void game_tick_signal();
 };
 
 #endif // GAMEHANDLER_H
