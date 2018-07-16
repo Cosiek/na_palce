@@ -71,6 +71,11 @@ QString GameHandler::key_released(QString key_name)
     return key_name + " released (C++) ";
 }
 
+void GameHandler::exit_game(){
+    this->same_note_timer->stop();
+    this->tick_timer->stop();
+}
+
 /*
  * Signals --------------------------------------------------------------------
  */
