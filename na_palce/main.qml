@@ -114,7 +114,10 @@ ApplicationWindow {
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
                 Layout.columnSpan: 3
-                onClicked: stackView.pop()
+                onClicked: function(){
+                    stackView.pop()
+                    game_handler.exit_game()
+                }
             }
             Canvas {
                 id: notes_display

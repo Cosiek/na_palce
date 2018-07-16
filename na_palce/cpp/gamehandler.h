@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE QString get_current_state();
     Q_INVOKABLE QString key_pressed(QString);
     Q_INVOKABLE QString key_released(QString);
+    Q_INVOKABLE void exit_game();
 private:
     void change_note();
     void check_key_change(std::string, bool);
