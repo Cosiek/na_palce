@@ -72,7 +72,8 @@ ApplicationWindow {
                 notes_text.text = currentState.state + ' ' + currentState.time_left
                 if (currentState.state === "stoped" && currentState.time_left === 0){
                     // TODO: move this to somewhere more appropriate
-                    stackView.pop()
+                    game_handler.exit_game()
+                    stackView.push(summaryComponent)
                     return
                 }
                 notes_display.currentState = currentState.notes
@@ -196,10 +197,43 @@ ApplicationWindow {
             }
 
             Component.onCompleted: {
+                console.log('Component.onCompleted')
                 game_handler.init_new_game()
                 renderDisplay()
                 game_handler.same_note_signal.connect(renderDisplay)
                 game_handler.game_tick_signal.connect(renderDisplay)
+            }
+        }
+    }
+    Component {
+        id: summaryComponent
+
+        Column {
+            id: column
+            spacing: 10
+
+            Text {
+                text: "Koniec"
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pointSize: 24
+                horizontalAlignment: Text.AlignHCenter
+            }
+            Button {
+                text: "▶"
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: {
+                    game_handler.init_new_game()
+                    stackView.pop()
+                }
+            }
+            Button {
+                text: "🚪"
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: {
+                    stackView.pop()
+                    game_handler.exit_game()
+                    stackView.pop()
+                }
             }
         }
     }
