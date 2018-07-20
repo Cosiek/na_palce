@@ -203,6 +203,13 @@ ApplicationWindow {
                 game_handler.same_note_signal.connect(renderDisplay)
                 game_handler.game_tick_signal.connect(renderDisplay)
             }
+
+            Component.onDestruction: {
+                console.log("Component.onDestruction()")
+                game_handler.exit_game()
+                game_handler.game_tick_signal.disconnect(renderDisplay)
+                game_handler.same_note_signal.disconnect(renderDisplay)
+            }
         }
     }
     Component {
