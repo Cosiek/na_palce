@@ -35,7 +35,7 @@ void GameHandler::init_new_game(){
     this->current_notes.push_back(get_random_note(0, 45));
     this->current_notes.push_back(get_random_note(0, 45));
     this->state = QString("pending");
-    this->time_left = 0;
+    this->time_left = 60;
 }
 
 QString GameHandler::get_current_state(){
@@ -102,7 +102,6 @@ void GameHandler::check_key_change(std::string key, bool isPressed){
     // compare current keys state with what current note type state
     if (! this->tick_timer->isActive()){
         this->state = QString("running");
-        this->time_left = 60;
         this->tick_timer->start(1000);
     }
     if (this->check_note()){
