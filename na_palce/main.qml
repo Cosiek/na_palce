@@ -237,9 +237,7 @@ ApplicationWindow {
                 text: "🚪"
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
-                    stackView.pop()
-                    game_handler.exit_game()
-                    stackView.pop()
+                    stackView.pop(null)
                 }
             }
         }
