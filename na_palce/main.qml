@@ -68,8 +68,8 @@ ApplicationWindow {
 
             function renderDisplay(){
                 var currentState = JSON.parse(game_handler.get_current_state())
-                // notes_text.text = currentState.state + ' ' + currentState.notes[0].name + ' ' + currentState.notes[1].name
-                notes_text.text = currentState.state + ' ' + currentState.time_left
+                notes_text.text = currentState.notes[0].name + ' ' + currentState.notes[1].name
+                timer_display.text = currentState.time_left
                 if (currentState.state === "stoped" && currentState.time_left === 0){
                     // TODO: move this to somewhere more appropriate
                     game_handler.exit_game()
@@ -114,12 +114,24 @@ ApplicationWindow {
                 text: "⬅"
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 40
-                Layout.columnSpan: 3
+                Layout.columnSpan: 2
                 onClicked: function(){
                     stackView.pop()
                     game_handler.exit_game()
                 }
             }
+            Text {
+                id: timer_display
+                text: "0"
+                font.pixelSize: 16
+                Layout.alignment: Qt.AlignRight | Qt.AlignTop
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignRight
+                Layout.columnSpan: 1
+            }
+
             Canvas {
                 id: notes_display
                 Layout.fillWidth: true
@@ -195,6 +207,7 @@ ApplicationWindow {
                     onReleased: keyReleased("valve3")
                 }
             }
+
             StackView.onActivating: {
                 game_handler.init_new_game()
                 renderDisplay()
