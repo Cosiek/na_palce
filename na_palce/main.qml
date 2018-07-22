@@ -195,17 +195,13 @@ ApplicationWindow {
                     onReleased: keyReleased("valve3")
                 }
             }
-
-            Component.onCompleted: {
-                console.log('Component.onCompleted')
+            StackView.onActivating: {
                 game_handler.init_new_game()
                 renderDisplay()
                 game_handler.same_note_signal.connect(renderDisplay)
                 game_handler.game_tick_signal.connect(renderDisplay)
             }
-
-            Component.onDestruction: {
-                console.log("Component.onDestruction()")
+            StackView.onDeactivating: {
                 game_handler.exit_game()
                 game_handler.game_tick_signal.disconnect(renderDisplay)
                 game_handler.same_note_signal.disconnect(renderDisplay)
