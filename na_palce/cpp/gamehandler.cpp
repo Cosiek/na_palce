@@ -31,10 +31,10 @@ GameHandler::GameHandler(QObject *parent) : QObject(parent)
  */
 
 void GameHandler::init_new_game(){
+    this->pressed = {{"valve1", false}, {"valve2", false}, {"valve3", false}};
     this->current_notes.clear();
     Note note = get_random_note(0, 45);
-    while (note.match({{"valve1", false}, {"valve2", false}, {"valve3", false}})) {
-        this->debug_helper();
+    while (note.match(this->pressed)) {
         note = get_random_note(0, 45);
     }
     this->current_notes.push_back(note);
