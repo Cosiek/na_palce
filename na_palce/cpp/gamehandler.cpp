@@ -40,7 +40,7 @@ void GameHandler::init_new_game(){
     this->current_notes.push_back(note);
     this->current_notes.push_back(get_random_note(0, 45));
     this->state = QString("pending");
-    this->time_left = 60;
+    this->time_left = 5;
 }
 
 QString GameHandler::get_current_state(){
