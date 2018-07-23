@@ -57,7 +57,6 @@ ApplicationWindow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: Qt.quit()
             }
-
         }
     }
 
@@ -157,7 +156,7 @@ ApplicationWindow {
             }
             Text {
                 id: notes_text
-                text: "🎼\nPres any key to start."
+                text: "ð¼\nPres any key to start."
                 font.pointSize: 36
                 anchors.left: parent.left
                 anchors.leftMargin: 10
@@ -230,6 +229,7 @@ ApplicationWindow {
         Column {
             id: column
             spacing: 10
+            property Item defaultFocusItem: this
 
             Text {
                 text: "Koniec"
