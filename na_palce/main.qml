@@ -26,6 +26,12 @@ ApplicationWindow {
                 currentItem.defaultFocusItem.focus = true
             }
         }
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back && stackView.depth > 1) {
+                stackView.pop();
+                event.accepted = true;
+            }
+        }
     }
 
     Component {
@@ -104,8 +110,6 @@ ApplicationWindow {
                 if (event.key === Qt.Key_Left){keyReleased("valve1")}
                 else if (event.key === Qt.Key_Down){keyReleased("valve2")}
                 else if (event.key === Qt.Key_Right){keyReleased("valve3")}
-                // make back button work
-                else if (event.key === Qt.Key_Back){stackView.pop()}
                 else {return null}
                 event.accepted = true;
             }
@@ -131,7 +135,6 @@ ApplicationWindow {
                 verticalAlignment: Text.AlignRight
                 Layout.columnSpan: 1
             }
-
             Canvas {
                 id: notes_display
                 Layout.fillWidth: true
