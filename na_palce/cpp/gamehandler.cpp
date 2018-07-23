@@ -32,7 +32,12 @@ GameHandler::GameHandler(QObject *parent) : QObject(parent)
 
 void GameHandler::init_new_game(){
     this->current_notes.clear();
-    this->current_notes.push_back(get_random_note(0, 45));
+    Note note = get_random_note(0, 45);
+    while (note.match({{"valve1", false}, {"valve2", false}, {"valve3", false}})) {
+        this->debug_helper();
+        note = get_random_note(0, 45);
+    }
+    this->current_notes.push_back(note);
     this->current_notes.push_back(get_random_note(0, 45));
     this->state = QString("pending");
     this->time_left = 60;
