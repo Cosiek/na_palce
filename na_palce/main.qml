@@ -156,7 +156,7 @@ ApplicationWindow {
             }
             Text {
                 id: notes_text
-                text: "ð¼\nPres any key to start."
+                text: "Press any key to start."
                 font.pointSize: 36
                 anchors.left: parent.left
                 anchors.leftMargin: 10
@@ -213,6 +213,7 @@ ApplicationWindow {
             StackView.onActivating: {
                 game_handler.init_new_game()
                 renderDisplay()
+                notes_text.text = qsTr("Press any key to start.")
                 game_handler.same_note_signal.connect(renderDisplay)
                 game_handler.game_tick_signal.connect(renderDisplay)
             }
