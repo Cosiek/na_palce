@@ -72,17 +72,19 @@ ApplicationWindow {
             property double pixelDensityScale: Screen.pixelDensity / basePixelDensity
 
             function renderDisplay(){
+                var currentNotes = JSON.parse(game_handler.get_current_notes())
+                notes_text.text = currentNotes[0].name + ' ' + currentNotes[1].name
+                notes_display.currentNotes = currentNotes
+                notes_display.requestPaint()
+            }
+            function renderTimer(){
                 var currentState = JSON.parse(game_handler.get_current_state())
-                notes_text.text = currentState.notes[0].name + ' ' + currentState.notes[1].name
                 timer_display.text = currentState.time_left
                 if (currentState.state === "stoped" && currentState.time_left === 0){
-                    // TODO: move this to somewhere more appropriate
                     game_handler.exit_game()
                     stackView.push(summaryComponent)
                     return
                 }
-                notes_display.currentState = currentState.notes
-                notes_display.requestPaint()
             }
 
             function keyPressed(keyName){
@@ -143,14 +145,14 @@ ApplicationWindow {
                 contextType: "2d"
                 clip: true
                 Layout.columnSpan: 3
-                property var currentState: []
+                property var currentNotes: []
 
                 onPaint: {
                     var ctx = notes_display.getContext('2d');
                     ctx.save();
                     ctx.clearRect(0, 0, notes_display.width, notes_display.height);
                     ctx.globalCompositeOperation = "source-over";
-                    NotesRenderer.render(ctx, this.currentState, notes_display.width, notes_display.height);
+                    NotesRenderer.render(ctx, this.currentNotes, notes_display.width, notes_display.height);
                     ctx.restore();
                 }
             }
@@ -214,12 +216,12 @@ ApplicationWindow {
                 game_handler.init_new_game()
                 renderDisplay()
                 notes_text.text = qsTr("Press any key to start.")
+                game_handler.game_tick_signal.connect(renderTimer)
                 game_handler.same_note_signal.connect(renderDisplay)
-                game_handler.game_tick_signal.connect(renderDisplay)
             }
             StackView.onDeactivating: {
                 game_handler.exit_game()
-                game_handler.game_tick_signal.disconnect(renderDisplay)
+                game_handler.game_tick_signal.disconnect(renderTimer)
                 game_handler.same_note_signal.disconnect(renderDisplay)
             }
         }

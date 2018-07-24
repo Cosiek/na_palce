@@ -48,13 +48,17 @@ QString GameHandler::get_current_state(){
     stateObject.insert("state", QJsonValue::fromVariant(this->state));
     stateObject.insert("time_left", QJsonValue::fromVariant(this->time_left));
 
+    QJsonDocument jsonDocument = QJsonDocument(stateObject);
+    return jsonDocument.toJson();
+}
+
+QString GameHandler::get_current_notes(){
     QJsonArray notesArray;
     for(Note note : current_notes) {
         notesArray.append(note.toQJsonObject());
     }
-    stateObject.insert("notes", notesArray);
 
-    QJsonDocument jsonDocument = QJsonDocument(stateObject);
+    QJsonDocument jsonDocument = QJsonDocument(notesArray);
     return jsonDocument.toJson();
 }
 
