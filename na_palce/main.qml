@@ -53,35 +53,4 @@ ApplicationWindow {
             }
         }
     }
-    Component {
-        id: summaryComponent
-
-        Column {
-            id: column
-            spacing: 10
-            property Item defaultFocusItem: this
-
-            Text {
-                text: "Koniec"
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pointSize: 24
-                horizontalAlignment: Text.AlignHCenter
-            }
-            Button {
-                text: "▶"
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    game_handler.init_new_game()
-                    stackView.pop()
-                }
-            }
-            Button {
-                text: "🚪"
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    stackView.pop(null)
-                }
-            }
-        }
-    }
 }
