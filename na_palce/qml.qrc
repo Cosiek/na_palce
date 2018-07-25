@@ -4,5 +4,6 @@
         <file>qtquickcontrols2.conf</file>
         <file>draw_notes.js</file>
         <file>game.qml</file>
+        <file>game_summary.qml</file>
     </qresource>
 </RCC>

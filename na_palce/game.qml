@@ -22,8 +22,7 @@ Item {
         timer_display.text = currentState.time_left
         if (currentState.state === "stoped" && currentState.time_left === 0){
             game_handler.exit_game()
-            stackView.push(summaryComponent)
-            return
+            stackView.push("qrc:/game_summary.qml")
         }
     }
 
