@@ -1,10 +1,5 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1
-import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
-
-import "draw_notes.js" as NotesRenderer
-import Qt.labs.handlers 1.0
 
 ApplicationWindow {
     visible: true
@@ -49,7 +44,7 @@ ApplicationWindow {
             Button {
                 text: "▶"
                 anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: stackView.push("qrc:/game.qml", {game_handler: game_handler})
+                onClicked: stackView.push("qrc:/game.qml")
             }
             Button {
                 text: "🚪"
