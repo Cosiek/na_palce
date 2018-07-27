@@ -16,7 +16,7 @@ Item {
         anchors.fill: parent
 
         Text {
-            text: "Koniec"
+            text: "Koniec\n" + stats_handler.get_stats()
             anchors.horizontalCenter: parent.horizontalCenter
             font.pointSize: 24
             horizontalAlignment: Text.AlignHCenter
