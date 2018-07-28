@@ -35,6 +35,9 @@ Item {
         renderDisplay()
     }
 
+    function correct(){console.log("Dobrze")}
+    function mistake(){console.log("Błąd")}
+
     Keys.onPressed: {
         if (event.isAutoRepeat){return null}
         if (event.key === Qt.Key_Left){keyPressed("valve1")}
@@ -59,11 +62,15 @@ Item {
         notes_text.text = qsTr("Press any key to start.")
         game_handler.game_tick_signal.connect(renderTimer)
         game_handler.same_note_signal.connect(renderDisplay)
+        game_handler.onMistake.connect(mistake)
+        game_handler.onCorrect.connect(correct)
     }
     StackView.onDeactivating: {
         game_handler.exit_game()
         game_handler.game_tick_signal.disconnect(renderTimer)
         game_handler.same_note_signal.disconnect(renderDisplay)
+        game_handler.onMistake.disconnect(mistake)
+        game_handler.onCorrect.disconnect(correct)
     }
 
     GridLayout {

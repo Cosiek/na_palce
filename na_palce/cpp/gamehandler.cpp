@@ -90,7 +90,11 @@ void GameHandler::exit_game(){
  */
 
 void GameHandler::same_note_timeout(){
-    this->check_note();
+    if (this->check_note()){
+        emit onCorrect();
+    } else {
+        emit onMistake();
+    }
     emit same_note_signal();
 }
 
@@ -108,19 +112,18 @@ void GameHandler::game_tick_timeout(){
  */
 
 void GameHandler::check_key_change(std::string key, bool isPressed){
-    // compare current keys state with what current note type state
+    // start a timer, if it isn't runing yet
     if (! this->tick_timer->isActive()){
         this->state = QString("running");
         this->tick_timer->start(1000);
     }
+    // compare current keys state with what current note type state
     if (this->check_note()){
-        // if correct, get new random note,
-        qDebug() << "DOBRZE " << key.c_str();
+        emit onCorrect();
     // if not, check if step in right dirrection
     } else if (this->current_notes.front().isMistake(key, isPressed)){
         // if change not in right direction, mark error
-        qDebug() << "BŁĄD " << key.c_str();
-        // TODO increase mistakes counter
+        emit onMistake();
     }
 }
 

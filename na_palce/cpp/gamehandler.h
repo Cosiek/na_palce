@@ -46,6 +46,8 @@ private slots:
 signals:
     void same_note_signal();
     void game_tick_signal();
+    void onMistake();
+    void onCorrect();
 };
 
 #endif // GAMEHANDLER_H
