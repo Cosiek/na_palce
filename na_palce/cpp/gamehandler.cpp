@@ -91,6 +91,7 @@ void GameHandler::exit_game(){
 
 void GameHandler::same_note_timeout(){
     if (this->check_note()){
+        this->change_note();
         emit onCorrect();
     } else {
         emit onMistake();
@@ -119,6 +120,8 @@ void GameHandler::check_key_change(std::string key, bool isPressed){
     }
     // compare current keys state with what current note type state
     if (this->check_note()){
+        // if correct, get new random note,
+        this->change_note();
         emit onCorrect();
     // if not, check if step in right dirrection
     } else if (this->current_notes.front().isMistake(key, isPressed)){
@@ -130,6 +133,11 @@ void GameHandler::check_key_change(std::string key, bool isPressed){
 void GameHandler::change_note(){
     this->current_notes.pop_front();
     this->current_notes.push_back(get_random_note(0, 45));
+    // new note might be using the same setting - use a timer
+    // to check if user havent moved
+    if (this->current_notes.front().match(this->pressed)){
+        this->same_note_timer->start(1000);
+    }
 }
 
 bool GameHandler::check_note(){
@@ -137,17 +145,7 @@ bool GameHandler::check_note(){
     // it should stop the timer anyway.
     this->same_note_timer->stop();
     // compare current keys state with what current note type state
-    if (this->current_notes.front().match(this->pressed)){
-        // if correct, get new random note,
-        this->change_note();
-        // new note might be using the same setting - use a timer
-        // to check if user havent moved
-        if (this->current_notes.front().match(this->pressed)){
-            this->same_note_timer->start(1000);
-        }
-        return true;
-    }
-    return false;
+    return (this->current_notes.front().match(this->pressed));
 }
 
 void GameHandler::debug_helper(){
