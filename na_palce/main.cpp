@@ -22,16 +22,20 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    QScopedPointer<GameHandler> game_handler(new GameHandler);
-    QScopedPointer<StatisticsHandler> stats_handler(new StatisticsHandler);
-
     QQmlApplicationEngine engine;
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    engine.rootContext()->setContextProperty("game_handler", game_handler.data() );
-    engine.rootContext()->setContextProperty("stats_handler", stats_handler.data() );
+    QScopedPointer<GameHandler> game_handler_ptr(new GameHandler);
+    QScopedPointer<StatisticsHandler> stats_handler_ptr(new StatisticsHandler);
+
+    GameHandler * game_handler = game_handler_ptr.data();
+    StatisticsHandler * stats_handler = stats_handler_ptr.data();
+    game_handler->stats = stats_handler;
+
+    engine.rootContext()->setContextProperty("game_handler", game_handler );
+    engine.rootContext()->setContextProperty("stats_handler", stats_handler );
 
     return app.exec();
 }
