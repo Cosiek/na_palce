@@ -12,7 +12,10 @@ void StatisticsHandler::reset(){
 }
 
 QString StatisticsHandler::get_stats(){
-    return QString::number(this->total_mistakes);
+    QJsonObject statsObject;
+    statsObject["total_mistakes"] = this->total_mistakes;
+    QJsonDocument jsonDocument = QJsonDocument(statsObject);
+    return jsonDocument.toJson();
 }
 
 
