@@ -15,8 +15,13 @@ Item {
         anchors.topMargin: 0
         anchors.fill: parent
 
+        function get_stats_text(){
+            var stats = JSON.parse(stats_handler.get_stats())
+            return stats['total_mistakes']
+        }
+
         Text {
-            text: "Koniec\n" + stats_handler.get_stats()
+            text: "Koniec\n" + parent.get_stats_text()
             anchors.horizontalCenter: parent.horizontalCenter
             font.pointSize: 24
             horizontalAlignment: Text.AlignHCenter
