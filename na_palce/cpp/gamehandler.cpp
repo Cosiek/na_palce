@@ -129,7 +129,7 @@ void GameHandler::check_key_change(std::string key, bool isPressed){
     // if not, check if step in right dirrection
     } else if (this->current_notes.front().isMistake(key, isPressed)){
         // if change not in right direction, mark error
-        this->stats->countMistake();
+        this->stats->countMistake(this->current_notes.front());
         emit onMistake();
     }
 }
