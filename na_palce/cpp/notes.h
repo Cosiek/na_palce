@@ -20,6 +20,7 @@ public:
     bool match(std::unordered_map<std::string, bool>);
     bool isMistake(std::string, bool);
     std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
+    QString getId();
 };
 
 class Note
