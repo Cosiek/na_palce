@@ -12,10 +12,13 @@ struct keys_state{
 
 class NoteType{
 public:
+    NoteType(int, std::string, keys_state, bool, bool);
     int position;
     std::string name;
     keys_state keys;
     bool sharp, flat;
+    bool match(std::unordered_map<std::string, bool>);
+    bool isMistake(std::string, bool);
     std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
 };
 
