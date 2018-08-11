@@ -5,25 +5,11 @@
 
 #include <QJsonObject>
 
-struct keys_state{
-    bool valve1, valve2, valve3;
-};
+#include "notes.h"
 
 
 // ============================================================================
 // Note Type ------------------------------------------------------------------
-
-class NoteType{
-public:
-    int position;
-    std::string name;
-    keys_state keys;
-    bool sharp, flat;
-    NoteType(int, std::string, keys_state, bool, bool);
-    bool match(std::unordered_map<std::string, bool>);
-    bool isMistake(std::string, bool);
-    std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
-};
 
 NoteType::NoteType(int pos, std::string name_, keys_state keys_, bool sharp_,
                    bool flat_){
@@ -123,17 +109,6 @@ const std::vector<int> LENGTHS = {1, 2, 4, 8, 16};
 
 // ============================================================================
 // Note (combined) ------------------------------------------------------------
-
-class Note
-{
-public:
-    int length;
-    NoteType noteType;
-    bool match(std::unordered_map<std::string, bool>);
-    bool isMistake(std::string, bool);
-    QJsonObject toQJsonObject();
-};
-
 
 Note get_random_note(int min, int max){
     int length;
