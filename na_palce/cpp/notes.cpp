@@ -102,6 +102,11 @@ std::vector<NoteType> NoteType::getNotesByKeys(
     return v;
 }
 
+
+QString NoteType::getId(){
+    return QString::number(this->position) + ":" + this->name.c_str();
+}
+
 // ============================================================================
 // Note lenghth ---------------------------------------------------------------
 
