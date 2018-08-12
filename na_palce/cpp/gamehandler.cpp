@@ -124,6 +124,7 @@ void GameHandler::check_key_change(std::string key, bool isPressed){
     // compare current keys state with what current note type state
     if (this->check_note()){
         // if correct, get new random note,
+        this->stats->countCorrect(this->current_notes.front());
         this->change_note();
         emit onCorrect();
     // if not, check if step in right dirrection

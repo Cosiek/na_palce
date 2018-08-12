@@ -11,6 +11,7 @@
 struct NoteStatistic{
     NoteType * note;
     int mistakesCount;
+    int playedCount;
 };
 
 
@@ -22,11 +23,13 @@ public:
 
     Q_INVOKABLE QString get_stats();
 
+    void countCorrect(Note);
     void countMistake(Note);
     void reset();
 private:
     std::map<QString, NoteStatistic> notesStats;
     int total_mistakes;
+    int total_played;
 };
 
 #endif // STATISTICS_HANDLER_H
