@@ -10,6 +10,9 @@
 #include "statistics_handler.h"
 
 
+static int SAME_NOTE_INTERVAL = 1000;
+
+
 GameHandler::GameHandler(QObject *parent) : QObject(parent)
 {
     // currently pressed keys
@@ -96,6 +99,8 @@ void GameHandler::exit_game(){
 
 void GameHandler::same_note_timeout(){
     if (this->check_note()){
+        // update stats
+        this->stats->countCorrect(this->current_notes.front(), SAME_NOTE_INTERVAL);
         this->change_note();
         emit onCorrect();
     } else {
@@ -153,7 +158,7 @@ void GameHandler::change_note(){
     // new note might be using the same setting - use a timer
     // to check if user havent moved
     if (this->current_notes.front().match(this->pressed)){
-        this->same_note_timer->start(1000);
+        this->same_note_timer->start(SAME_NOTE_INTERVAL);
     }
 }
 
