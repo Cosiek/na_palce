@@ -31,6 +31,7 @@ private:
     std::map<QString, NoteStatistic> notesStats;
     int total_mistakes;
     int total_played;
+    unsigned long avgTime;
 };
 
 #endif // STATISTICS_HANDLER_H

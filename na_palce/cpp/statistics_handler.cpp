@@ -20,6 +20,7 @@ StatisticsHandler::StatisticsHandler(QObject *parent) : QObject(parent)
 void StatisticsHandler::reset(){
     this->total_mistakes = 0;
     this->total_played = 0;
+    this->avgTime = 0;
 
     for(auto const &ent : this->notesStats) {
         notesStats[ent.first].mistakesCount = 0;
@@ -33,6 +34,7 @@ QString StatisticsHandler::get_stats(){
     QJsonObject statsObject;
     statsObject["total_mistakes"] = this->total_mistakes;
     statsObject["total_played"] = this->total_played;
+    statsObject["avg_time"] = QString::number(this->avgTime);
 
     QJsonObject notesJson;
     for(auto const& ent : this->notesStats) {
@@ -56,11 +58,13 @@ void StatisticsHandler::countMistake(Note note){
 
 
 void StatisticsHandler::countCorrect(Note note, qint64 noteTime){
-    // update general statistics
-    this->total_played++;
     // update note type statistics
     QString key = note.noteType.getId();
     unsigned long avgTime = (this->notesStats[key].avgTime * this->notesStats[key].playedCount + noteTime) / (this->notesStats[key].playedCount + 1);
     this->notesStats[key].playedCount++;
     this->notesStats[key].avgTime = avgTime;
+
+    // update general statistics
+    this->avgTime = (this->avgTime * this->total_played + noteTime) / (this->total_played + 1);
+    this->total_played++;
 }
