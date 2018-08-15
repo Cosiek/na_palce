@@ -10,6 +10,7 @@
 
 struct NoteStatistic{
     NoteType * note;
+    unsigned long avgTime;
     int mistakesCount;
     int playedCount;
 };
@@ -23,7 +24,7 @@ public:
 
     Q_INVOKABLE QString get_stats();
 
-    void countCorrect(Note);
+    void countCorrect(Note, qint64);
     void countMistake(Note);
     void reset();
 private:
