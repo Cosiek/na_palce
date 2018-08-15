@@ -12,8 +12,9 @@ public:
 
     Q_INVOKABLE QString get_stats();
     void countMistake();
+    void reset();
 private:
-    int mistakes;
+    int total_mistakes;
 };
 
 #endif // STATISTICS_HANDLER_H

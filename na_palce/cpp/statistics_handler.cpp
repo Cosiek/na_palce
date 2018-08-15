@@ -4,14 +4,18 @@
 
 StatisticsHandler::StatisticsHandler(QObject *parent) : QObject(parent)
 {
-    this->mistakes = 0;
+    this->reset();
+}
+
+void StatisticsHandler::reset(){
+    this->total_mistakes = 0;
 }
 
 QString StatisticsHandler::get_stats(){
-    return QString::number(this->mistakes);
+    return QString::number(this->total_mistakes);
 }
 
 
 void StatisticsHandler::countMistake(){
-    this->mistakes++;
+    this->total_mistakes++;
 }
