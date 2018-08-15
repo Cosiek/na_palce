@@ -43,6 +43,8 @@ void GameHandler::init_new_game(){
     this->state = QString("pending");
     this->time_left = 60;
 
+    this->note_timestamp = 0;
+
     this->stats->reset();
 }
 
@@ -121,10 +123,20 @@ void GameHandler::check_key_change(std::string key, bool isPressed){
         this->state = QString("running");
         this->tick_timer->start(1000);
     }
+    // set note timestamp if it isn't already
+    if (this->note_timestamp == 0){
+        this->note_timestamp = QDateTime::currentMSecsSinceEpoch();
+    }
     // compare current keys state with what current note type state
-    if (this->check_note()){
-        // if correct, get new random note,
-        this->stats->countCorrect(this->current_notes.front());
+    if (this->check_note()){  // if correct...;
+        // handle calculating note press time
+        qint64 delta = QDateTime::currentMSecsSinceEpoch() - this->note_timestamp;
+        this->note_timestamp += delta;
+
+        // update stats
+        this->stats->countCorrect(this->current_notes.front(), delta);
+
+        // get new random note
         this->change_note();
         emit onCorrect();
     // if not, check if step in right dirrection
