@@ -124,7 +124,7 @@ Item {
         }
         Text {
             id: notes_text
-            text: "Press any key to start."
+            Layout.fillWidth: true
             font.pointSize: 36
             anchors.left: parent.left
             anchors.leftMargin: 10
