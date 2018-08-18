@@ -133,49 +133,76 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             Layout.columnSpan: 3
         }
-        Button {
-            id: valve1
-            text: "1"
-            Layout.preferredHeight: 60 * parent.pixelDensityScale
-            Layout.preferredWidth: 60 * parent.pixelDensityScale
-            checkable: true
-            checked: tp_valve1.pressed
-            MultiPointTouchArea{
-                anchors.fill: parent
-                touchPoints: TouchPoint { id: tp_valve1 }
-                onPressed: keyPressed("valve1")
-                onReleased: keyReleased("valve1")
+        RowLayout {
+            id: rowLayout
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.columnSpan: 3
+            Item {
+                id: spacer1
+                Layout.fillWidth: true
+            }
+            Button {
+                id: valve1
+                text: "1"
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                Layout.preferredHeight: 60 * gridLayout.pixelDensityScale
+                Layout.preferredWidth: 60 * gridLayout.pixelDensityScale
+                checkable: true
+                checked: tp_valve1.pressed
+                MultiPointTouchArea{
+                    anchors.fill: parent
+                    touchPoints: TouchPoint { id: tp_valve1 }
+                    onPressed: keyPressed("valve1")
+                    onReleased: keyReleased("valve1")
+                }
+            }
+            Item {
+                id: spacer2
+                Layout.preferredWidth: 30 * gridLayout.pixelDensityScale
+            }
+            Button {
+                id: valve2
+                text: "2"
+                Layout.fillHeight: false
+                Layout.fillWidth: false
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.preferredHeight: 60 * gridLayout.pixelDensityScale
+                Layout.preferredWidth: 60 * gridLayout.pixelDensityScale
+                checkable: true
+                checked: tp_valve2.pressed
+                MultiPointTouchArea{
+                    anchors.fill: parent
+                    touchPoints: TouchPoint { id: tp_valve2 }
+                    onPressed: keyPressed("valve2")
+                    onReleased: keyReleased("valve2")
+                }
+            }
+            Item {
+                id: spacer3
+                Layout.preferredWidth: 30 * gridLayout.pixelDensityScale
+            }
+            Button {
+                id: valve3
+                text: "3"
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                Layout.preferredHeight: 60 * gridLayout.pixelDensityScale
+                Layout.preferredWidth: 60 * gridLayout.pixelDensityScale
+                checkable: true
+                checked: tp_valve3.pressed
+                MultiPointTouchArea{
+                    anchors.fill: parent
+                    touchPoints: TouchPoint { id: tp_valve3 }
+                    onPressed: keyPressed("valve3")
+                    onReleased: keyReleased("valve3")
+                }
+            }
+            Item {
+                id: spacer4
+                Layout.fillWidth: true
             }
         }
-        Button {
-            id: valve2
-            text: "2"
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            Layout.preferredHeight: 60 * parent.pixelDensityScale
-            Layout.preferredWidth: 60 * parent.pixelDensityScale
-            checkable: true
-            checked: tp_valve2.pressed
-            MultiPointTouchArea{
-                anchors.fill: parent
-                touchPoints: TouchPoint { id: tp_valve2 }
-                onPressed: keyPressed("valve2")
-                onReleased: keyReleased("valve2")
-            }
-        }
-        Button {
-            id: valve3
-            text: "3"
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-            Layout.preferredHeight: 60 * parent.pixelDensityScale
-            Layout.preferredWidth: 60 * parent.pixelDensityScale
-            checkable: true
-            checked: tp_valve3.pressed
-            MultiPointTouchArea{
-                anchors.fill: parent
-                touchPoints: TouchPoint { id: tp_valve3 }
-                onPressed: keyPressed("valve3")
-                onReleased: keyReleased("valve3")
-            }
-        }
+
+
     }
 }
