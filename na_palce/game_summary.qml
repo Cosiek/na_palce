@@ -18,6 +18,9 @@ Item {
         function get_stats_text(){
             var stats = JSON.parse(stats_handler.get_stats())
             var txt = "🎵 | ✖ | ✔ | ⌛"
+            txt += "\n--- | " + stats.total_mistakes
+            txt += " | " + stats.total_played
+            txt += " | " + stats.avg_time
             for (var s in stats.notes){
                 var ntStat = stats.notes[s]
                 if (ntStat.mistakes_count === 0 && ntStat.played_count ===0){
@@ -28,24 +31,17 @@ Item {
                 txt += " | " + ntStat.played_count
                 txt += " | " + ntStat.avg_time
             }
-            txt += "\n--- | " + stats.total_mistakes
-            txt += " | " + stats.total_played
-            txt += " | " + stats.avg_time
             return txt
         }
         Button {
             text: "▶"
             anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: {
-                stackView.pop()
-            }
+            onClicked: { stackView.pop() }
         }
         Button {
             text: "🚪"
             anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: {
-                stackView.pop(null)
-            }
+            onClicked: { stackView.pop(null) }
         }
         Text {
             text: "📈\n" + parent.get_stats_text()
