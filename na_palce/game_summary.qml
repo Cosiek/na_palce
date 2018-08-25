@@ -1,9 +1,11 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1
 
-Item {
 
+Flickable {
     id: summaryComponent
+    anchors.fill: parent
+    contentHeight: column.height
 
     Column {
         id: column
