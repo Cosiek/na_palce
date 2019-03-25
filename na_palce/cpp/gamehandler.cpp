@@ -124,7 +124,7 @@ void GameHandler::game_tick_timeout(){
 
 void GameHandler::check_key_change(std::string key, bool isPressed){
     // start a timer, if it isn't runing yet
-    if (! this->tick_timer->isActive()){
+    if (! this->tick_timer->isActive() && this->state == QString("pending")){
         this->state = QString("running");
         this->tick_timer->start(1000);
     }
