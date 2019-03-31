@@ -202,7 +202,5 @@ Item {
                 Layout.fillWidth: true
             }
         }
-
-
     }
 }
