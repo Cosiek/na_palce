@@ -1,8 +1,24 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1
 
+import "draw_table.js" as TableRenderer
+
 Item {
     id: summaryComponent
+
+    StackView.onActivating: {
+        // set table display canvas height
+        var stats = JSON.parse(stats_handler.get_stats());
+        var count = 2;
+        for (var s in stats.notes){
+            var ntStat = stats.notes[s];
+            if (ntStat.mistakes_count === 0 && ntStat.played_count === 0){
+                continue
+            }
+            count += 1;
+        }
+        table_display.height = (count + 1) * (summaryHead.font.pixelSize + 2);
+    }
 
     Flickable {
         id: summaryFlickable
@@ -18,31 +34,44 @@ Item {
             property Item defaultFocusItem: this
             anchors.fill: parent
 
-            function get_stats_text(){
-                var stats = JSON.parse(stats_handler.get_stats())
-                var txt = "🎵 | ✖ | ✔ | ⌛"
-                txt += "\n--- | " + stats.total_mistakes
-                txt += " | " + stats.total_played
-                txt += " | " + stats.avg_time
-                for (var s in stats.notes){
-                    var ntStat = stats.notes[s]
-                    if (ntStat.mistakes_count === 0 && ntStat.played_count ===0){
-                        continue
-                    }
-                    txt += "\n" + s
-                    txt += " | " + ntStat.mistakes_count
-                    txt += " | " + ntStat.played_count
-                    txt += " | " + ntStat.avg_time
-                }
-                return txt
-            }
             Text {
-                id: summaryTxt
-                text: "📈\n" + parent.get_stats_text()
+                id: summaryHead
+                text: "📈"
+                fontSizeMode: Text.VerticalFit
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pointSize: 14
                 horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
+            }
+            Canvas {
+                id: table_display
+                enabled: false
+                visible: true
+                width: parent.width - 20;
+                anchors.horizontalCenter: parent.horizontalCenter
+                contextType: qsTr("2d")
+
+                onPaint: {// prepare table data
+                    var stats = JSON.parse(stats_handler.get_stats());
+                    var tableData = [
+                        ["🎵", "✖", "✔", "⌛"],
+                        ["∑", stats.total_mistakes, stats.total_played, stats.avg_time],
+                    ]
+                    for (var s in stats.notes){
+                        var ntStat = stats.notes[s];
+                        if (ntStat.mistakes_count === 0 && ntStat.played_count === 0){
+                            continue
+                        }
+                        tableData.push(
+                            [s, ntStat.mistakes_count, ntStat.played_count, ntStat.avg_time]
+                        );
+                    }
+                    // render
+                    var ctx = table_display.getContext('2d');
+                    ctx.clearRect(0, 0, table_display.width, table_display.height);
+                    TableRenderer.drawTable(ctx, tableData, table_display.width,
+                                            table_display.height, summaryHead.font.pixelSize,
+                                            summaryHead.font.family);
+                }
             }
             Button {
                 id: playAgainButton
