@@ -1,6 +1,9 @@
-function render(ctx, notesList, width, height){
+function render(ctx, notesList, width, height, xOffset, yOffset){
+    // xOffset, yOffset are optional
+    xOffset = xOffset || 0
+    yOffset = yOffset || 0
     // calculate sizes
-    var sizes = getSizes(width, height)
+    var sizes = getSizes(width, height, xOffset, yOffset)
     // draw sheet elements
     drawSheet(ctx, sizes);
     // draw notes
@@ -37,19 +40,20 @@ function scalePath(path, scale){
 }
 
 
-function getSizes(width, height){
+function getSizes(width, height, xOffset, yOffset){
     var sizes = {'w': width, 'h': height, 'paths': {}};
     sizes['scale'] = sizes.h / 82;
     sizes['margin'] = 3 * sizes.scale;
+    sizes['leftMargin'] = sizes['margin'] + xOffset;
     sizes['lineSpacing'] = 5  * sizes.scale;
     sizes['noteSpacing'] = sizes['lineSpacing'] * 4;
-    sizes['line3y'] = height / 2;
+    sizes['line3y'] = height / 2 + yOffset;
     sizes['line2y'] = sizes['line3y'] + sizes.lineSpacing;
     sizes['line1y'] = sizes['line2y'] + sizes.lineSpacing;
     sizes['line4y'] = sizes['line3y'] - sizes.lineSpacing;
     sizes['line5y'] = sizes['line4y'] - sizes.lineSpacing;
     sizes['clefOffset'] = 13 * sizes.scale;
-    sizes['notesOffset'] = sizes['clefOffset'];
+    sizes['notesOffset'] = sizes['clefOffset'] + xOffset;
     sizes['helperLineWidth'] = 13 * sizes.scale;
     sizes['accidentalWidth'] = 8.5 * sizes.scale;
     if (SCALED_PATHS.scale !== sizes.scale){
@@ -72,7 +76,7 @@ function drawSheet(ctx, sizes){
     var path = "";
     for (var i = 1; i <= 5; i++){
         var key = "line" + i + "y";
-        path += "M " + sizes.margin + " " + sizes[key] + " ";
+        path += "M " + sizes.leftMargin + " " + sizes[key] + " ";
         path += "L " + (sizes.w - sizes.margin) + " " + sizes[key] + " ";
     }
     ctx.path = path;
@@ -80,7 +84,7 @@ function drawSheet(ctx, sizes){
     ctx.stroke();
     ctx.save();
     // draw clef
-    path = "M" + (sizes.margin + sizes.clefOffset) + " " + sizes.line3y + " ";
+    path = "M" + (sizes.leftMargin + sizes.clefOffset) + " " + sizes.line3y + " ";
     path += sizes.paths.clef
     ctx.path = path;
     ctx.fill();

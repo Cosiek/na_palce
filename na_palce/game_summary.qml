@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.1
 
 import "draw_table.js" as TableRenderer
+import "draw_notes.js" as NotesRenderer
 
 Item {
     id: summaryComponent
@@ -17,7 +18,7 @@ Item {
             }
             count += 1;
         }
-        table_display.height = (count + 1) * (summaryHead.font.pixelSize + 2);
+        table_display.height = (count + 1) * (summaryHead.font.pixelSize + 2) * 4;
     }
 
     Flickable {
@@ -50,19 +51,24 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 contextType: qsTr("2d")
 
-                onPaint: {// prepare table data
+                onPaint: {
+                    // prepare table data
                     var stats = JSON.parse(stats_handler.get_stats());
                     var tableData = [
                         ["🎵", "✖", "✔", "⌛"],
                         ["∑", stats.total_mistakes, stats.total_played, stats.avg_time],
                     ]
-                    for (var s in stats.notes){
-                        var ntStat = stats.notes[s];
-                        if (ntStat.mistakes_count === 0 && ntStat.played_count === 0){
+                    // prepare notes data
+                    var noteTypes = JSON.parse(game_handler.get_note_types());
+                    for (var idx in noteTypes){
+                        var noteType = noteTypes[idx];
+                        var ntStat = stats.notes[noteType.position + ":" + noteType.name];
+                        if (!ntStat || ntStat.mistakes_count === 0 && ntStat.played_count === 0){
                             continue
                         }
                         tableData.push(
-                            [s, ntStat.mistakes_count, ntStat.played_count, ntStat.avg_time]
+                            [noteType, ntStat.mistakes_count,
+                             ntStat.played_count, ntStat.avg_time]
                         );
                     }
                     // render
