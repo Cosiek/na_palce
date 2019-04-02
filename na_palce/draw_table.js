@@ -5,7 +5,7 @@ function drawTable(ctx, tableData, width, maxHeight, fontSize, fontFamily) {
     ctx.fillStyle = "#000000";
     ctx.strokeStyle = "#000000";
     ctx.textAlign = "center";
-    ctx.textBaseline = "top";
+    ctx.textBaseline = "middle";
     ctx.font = fontSize + 'px ' + fontFamily;
     var margin = 10;
     // path
@@ -13,17 +13,24 @@ function drawTable(ctx, tableData, width, maxHeight, fontSize, fontFamily) {
     // calculate column widths
     var colWidth = (width - 2 * margin) / tableData[0].length;
     // calculate row heights
-    var rowHeight = Math.min(maxHeight / tableData.length, fontSize + 4);
+    var rowHeight = maxHeight / tableData.length;
     // render cells
     for (var rowIdx in tableData){
         var y = Number(rowIdx) * rowHeight;
+        // draw horizontal line
         if (Number(rowIdx) > 0){
             ctx.moveTo(margin, y);
             ctx.lineTo(width, y);
+            ctx.stroke();
         }
         for (var cellIdx in tableData[rowIdx]){
             var x = margin + colWidth * Number(cellIdx);
-            ctx.fillText(tableData[rowIdx][cellIdx], x + colWidth / 2, y, colWidth);
+            var content = tableData[rowIdx][cellIdx];
+            if (content.id){
+                NotesRenderer.render(ctx, [content, ], colWidth * 3/4, rowHeight, x, y);
+            } else {
+                ctx.fillText(content, x + colWidth / 2, y + rowHeight / 2, colWidth);
+            }
         }
     }
     // render vertical table lines
