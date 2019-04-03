@@ -22,6 +22,7 @@ public:
     bool isMistake(std::string, bool);
     std::vector<NoteType> getNotesByKeys(std::unordered_map<std::string, bool>);
     QString getId();
+    QJsonObject toQJsonObject();
 };
 
 class Note

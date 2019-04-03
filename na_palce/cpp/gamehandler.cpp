@@ -70,6 +70,16 @@ QString GameHandler::get_current_notes(){
     return jsonDocument.toJson();
 }
 
+QString GameHandler::get_note_types(){
+    QJsonArray noteTypesArray;
+    for(NoteType noteType : NOTE_TYPES) {
+        noteTypesArray.append(noteType.toQJsonObject());
+    }
+
+    QJsonDocument jsonDocument = QJsonDocument(noteTypesArray);
+    return jsonDocument.toJson();
+}
+
 QString GameHandler::key_pressed(QString key_name)
 {
     std::string key = key_name.toUtf8().constData();
