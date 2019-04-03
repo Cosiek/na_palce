@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE void init_new_game();
     Q_INVOKABLE QString get_current_state();
     Q_INVOKABLE QString get_current_notes();
+    Q_INVOKABLE QString get_note_types();
     Q_INVOKABLE QString key_pressed(QString);
     Q_INVOKABLE QString key_released(QString);
     Q_INVOKABLE void exit_game();

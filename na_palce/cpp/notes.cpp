@@ -108,6 +108,20 @@ QString NoteType::getId(){
     return QString::number(this->position) + ":" + this->name.c_str();
 }
 
+
+QJsonObject NoteType::toQJsonObject(){
+    QJsonObject json;
+    json["id"] = id;
+    json["name"] = name.c_str();
+    json["position"] = position;
+    json["sharp"] = sharp;
+    json["flat"] = flat;
+    json["valve1"] = keys.valve1;
+    json["valve2"] = keys.valve2;
+    json["valve3"] = keys.valve3;
+    return json;
+}
+
 // ============================================================================
 // Note lenghth ---------------------------------------------------------------
 
