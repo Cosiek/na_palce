@@ -12,7 +12,8 @@ struct keys_state{
 
 class NoteType{
 public:
-    NoteType(int, std::string, keys_state, bool, bool);
+    NoteType(int, int, std::string, keys_state, bool, bool);
+    int id;
     int position;
     std::string name;
     keys_state keys;
