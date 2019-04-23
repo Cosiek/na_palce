@@ -14,6 +14,15 @@ function drawTable(ctx, tableData, width, maxHeight, fontSize, fontFamily) {
     var colWidth = (width - 2 * margin) / tableData[0].length;
     // calculate row heights
     var rowHeight = maxHeight / tableData.length;
+    // calculate dimentions for drawing notes
+    var scale = rowHeight / 50;
+    var forcedSizes = {
+        scale: scale,
+        margin: scale,
+        leftMargin: 3,
+        clefOffset: 5,
+        notesOffset: 1,
+    }
     // render cells
     for (var rowIdx in tableData){
         var y = Number(rowIdx) * rowHeight;
@@ -27,7 +36,7 @@ function drawTable(ctx, tableData, width, maxHeight, fontSize, fontFamily) {
             var x = margin + colWidth * Number(cellIdx);
             var content = tableData[rowIdx][cellIdx];
             if (content.id){
-                NotesRenderer.render(ctx, [content, ], colWidth * 3/4, rowHeight, x, y);
+                NotesRenderer.render(ctx, [content, ], colWidth, rowHeight, x, y, forcedSizes);
             } else {
                 ctx.fillText(content, x + colWidth / 2, y + rowHeight / 2, colWidth);
             }
