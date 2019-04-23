@@ -1,9 +1,9 @@
-function render(ctx, notesList, width, height, xOffset, yOffset){
+function render(ctx, notesList, width, height, xOffset, yOffset, forcedSizes){
     // xOffset, yOffset are optional
     xOffset = xOffset || 0
     yOffset = yOffset || 0
     // calculate sizes
-    var sizes = getSizes(width, height, xOffset, yOffset)
+    var sizes = getSizes(width, height, xOffset, yOffset, forcedSizes || {})
     // draw sheet elements
     drawSheet(ctx, sizes);
     // draw notes
@@ -40,22 +40,22 @@ function scalePath(path, scale){
 }
 
 
-function getSizes(width, height, xOffset, yOffset){
+function getSizes(width, height, xOffset, yOffset, forcedSizes){
     var sizes = {'w': width, 'h': height, 'paths': {}};
-    sizes['scale'] = sizes.h / 82;
-    sizes['margin'] = 3 * sizes.scale;
-    sizes['leftMargin'] = sizes['margin'] + xOffset;
-    sizes['lineSpacing'] = 5  * sizes.scale;
-    sizes['noteSpacing'] = sizes['lineSpacing'] * 4;
+    sizes['scale'] = forcedSizes.scale || sizes.h / 82;
+    sizes['margin'] = forcedSizes.margin || 3 * sizes.scale;
+    sizes['leftMargin'] = (forcedSizes.leftMargin || sizes['margin']) + xOffset;
+    sizes['lineSpacing'] = forcedSizes.lineSpacing || 5  * sizes.scale;
+    sizes['noteSpacing'] = forcedSizes.noteSpacing || sizes['lineSpacing'] * 4;
     sizes['line3y'] = height / 2 + yOffset;
     sizes['line2y'] = sizes['line3y'] + sizes.lineSpacing;
     sizes['line1y'] = sizes['line2y'] + sizes.lineSpacing;
     sizes['line4y'] = sizes['line3y'] - sizes.lineSpacing;
     sizes['line5y'] = sizes['line4y'] - sizes.lineSpacing;
-    sizes['clefOffset'] = 13 * sizes.scale;
-    sizes['notesOffset'] = sizes['clefOffset'] + xOffset;
-    sizes['helperLineWidth'] = 13 * sizes.scale;
-    sizes['accidentalWidth'] = 8.5 * sizes.scale;
+    sizes['clefOffset'] = forcedSizes.clefOffset || 13 * sizes.scale;
+    sizes['notesOffset'] = (forcedSizes.notesOffset || sizes['clefOffset']) + xOffset;
+    sizes['helperLineWidth'] = forcedSizes.helperLineWidth || 13 * sizes.scale;
+    sizes['accidentalWidth'] = forcedSizes.accidentalWidth || 8.5 * sizes.scale;
     if (SCALED_PATHS.scale !== sizes.scale){
         for (var key in PATHS){
             SCALED_PATHS[key] = scalePath(PATHS[key], sizes.scale);
