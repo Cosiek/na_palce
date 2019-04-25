@@ -6,5 +6,6 @@
         <file>game.qml</file>
         <file>game_summary.qml</file>
         <file>draw_table.js</file>
+        <file>settings.qml</file>
     </qresource>
 </RCC>
