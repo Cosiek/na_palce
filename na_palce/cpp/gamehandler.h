@@ -9,6 +9,7 @@
 #include <QTimer>
 
 #include "notes.h"
+#include "settings.h"
 #include "statistics_handler.h"
 
 
@@ -26,8 +27,9 @@ public:
     Q_INVOKABLE QString key_released(QString);
     Q_INVOKABLE void exit_game();
 
-    // a reference to statistics
+    // references to other complex objects
     StatisticsHandler * stats;
+    SettingsHolder * settings;
 private:
     void change_note();
     void check_key_change(std::string, bool);

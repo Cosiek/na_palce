@@ -5,6 +5,7 @@ CONFIG += c++11
 SOURCES += main.cpp \
     cpp/notes.cpp \
     cpp/gamehandler.cpp \
+    cpp/settings.cpp \
     cpp/statistics_handler.cpp
 
 RESOURCES += qml.qrc
@@ -34,4 +35,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     cpp/notes.h \
     cpp/gamehandler.h \
+    cpp/settings.h \
     cpp/statistics_handler.h
