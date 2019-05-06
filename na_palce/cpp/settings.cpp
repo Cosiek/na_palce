@@ -11,6 +11,11 @@ SettingsHolder::SettingsHolder(QObject *parent) : QObject(parent)
 {
     this->displayNoteNames = true;
 
+    // read settings from file
+    this->loadSettingsFromFile();
+    // write settings to the same file (in case any keys were added)
+    this->saveSettings();
+}
 
 bool SettingsHolder::saveSettings(){
     QFile saveFile(SETTINGS_FILE_PTH);
