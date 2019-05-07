@@ -34,10 +34,6 @@ Item {
         settings.saveSettings();
     }
 
-    StackView.onDeactivating: {
-        // reset controls if not saved?
-    }
-
     Flickable {
         id: settingsFlickable
         anchors.fill: parent
