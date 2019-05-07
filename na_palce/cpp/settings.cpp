@@ -1,24 +1,29 @@
 #include <string>
 
+#include <QDir>
 #include <QFile>
+#include <QGuiApplication>
 
 #include "settings.h"
-
-const QString SETTINGS_FILE_PTH = "na_palce_settings.json";
 
 
 SettingsHolder::SettingsHolder(QObject *parent) : QObject(parent)
 {
     this->displayNoteNames = true;
 
+    // get file path
+    QString dirPath = QCoreApplication::applicationDirPath();
+    QString fileName = QString("na_palce_settings.json");
+    this->SETTINGS_FILE_PTH += QDir(dirPath).filePath(fileName);
     // read settings from file
     this->loadSettingsFromFile();
     // write settings to the same file (in case any keys were added)
     this->saveSettings();
 }
 
+
 bool SettingsHolder::saveSettings(){
-    QFile saveFile(SETTINGS_FILE_PTH);
+    QFile saveFile(this->SETTINGS_FILE_PTH);
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
         return false;
@@ -31,7 +36,7 @@ bool SettingsHolder::saveSettings(){
 }
 
 bool SettingsHolder::loadSettingsFromFile(){
-    QFile loadFile(SETTINGS_FILE_PTH);
+    QFile loadFile(this->SETTINGS_FILE_PTH);
 
     if (!loadFile.open(QIODevice::ReadOnly)) {
         return false;
