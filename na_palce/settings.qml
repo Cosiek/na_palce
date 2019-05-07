@@ -21,6 +21,19 @@ Item {
         }
     }
 
+    function saveSettings(){
+        var children = settingsGridLayout.children;
+        var settingsObject = {};
+        for (var k in children){
+            if (children[k].objectName.length > 0){
+                settingsObject[children[k].objectName] = children[k].get();
+            }
+        }
+
+        settings.loadSettingsFromJson(JSON.stringify(settingsObject));
+        settings.saveSettings();
+    }
+
     StackView.onDeactivating: {
         // reset controls if not saved?
     }
@@ -57,11 +70,12 @@ Item {
             }
             Switch {
                 id: displayNoteNamesSetting
-                objectName: "displayNoteNamesSetting"
+                objectName: "displayNoteNames"
                 scale: 0.5
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
                 function set(arg){ displayNoteNamesSetting.checked = arg }
+                function get(){ return displayNoteNamesSetting.checked }
             }
 
             Button {
@@ -70,7 +84,7 @@ Item {
                 Layout.preferredWidth: 40
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 onClicked: function(){
-                    stackView.pop()
+                    stackView.pop();
                 }
             }
             Button {
@@ -79,7 +93,8 @@ Item {
                 Layout.preferredWidth: 40
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 onClicked: function(){
-                    stackView.pop()
+                    saveSettings();
+                    stackView.pop();
                 }
             }
         }
