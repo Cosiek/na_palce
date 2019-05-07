@@ -13,7 +13,6 @@
 
 void initialize_stuff(){
     std::srand(std::time(0));
-    //std::srand(std::time(nullptr));
 }
 
 
