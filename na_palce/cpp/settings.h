@@ -12,6 +12,7 @@ class SettingsHolder: public QObject
     Q_OBJECT
 public:
     explicit SettingsHolder(QObject *parent = nullptr);
+    QString SETTINGS_FILE_PTH;
     // actual settings
     bool displayNoteNames;
 
