@@ -10,6 +10,15 @@ Item {
 
     StackView.onActivating: {
         // set controls to match saved settings
+        var settingsObj = JSON.parse(settings.toJson())
+        var children = settingsGridLayout.children
+        for (var key in settingsObj){
+            for (var k in children){
+                if (children[k].objectName === key){
+                    children[k].set(settingsObj[key])
+                }
+            }
+        }
     }
 
     StackView.onDeactivating: {
@@ -48,8 +57,11 @@ Item {
             }
             Switch {
                 id: displayNoteNamesSetting
+                objectName: "displayNoteNamesSetting"
                 scale: 0.5
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+                function set(arg){ displayNoteNamesSetting.checked = arg }
             }
 
             Button {

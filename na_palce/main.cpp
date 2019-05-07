@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("game_handler", game_handler );
     engine.rootContext()->setContextProperty("stats_handler", stats_handler );
+    engine.rootContext()->setContextProperty("settings", settings );
 
     return app.exec();
 }
