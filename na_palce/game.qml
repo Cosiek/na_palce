@@ -10,10 +10,15 @@ import Qt.labs.handlers 1.0
 Item {
     id: gameView
     property Item defaultFocusItem: this
+    property var settingsObject: null
 
     function renderDisplay(){
         var currentNotes = JSON.parse(game_handler.get_current_notes())
-        notes_text.text = currentNotes[0].name + ' ' + currentNotes[1].name
+        if (gameView.settingsObject.displayNoteNames){
+            notes_text.text = currentNotes[0].name + ' ' + currentNotes[1].name
+        } else {
+            notes_text.text = ''
+        }
         notes_display.currentNotes = currentNotes
         notes_display.requestPaint()
     }
@@ -57,6 +62,8 @@ Item {
     }
 
     StackView.onActivating: {
+        gameView.settingsObject = JSON.parse(settings.toJson())
+
         game_handler.init_new_game()
         renderDisplay()
         notes_text.text = qsTr("Press any key to start.")
