@@ -18,7 +18,7 @@ Item {
             }
             count += 1;
         }
-        table_display.height = (count + 1) * (summaryHead.font.pixelSize + 2) * 4;
+        table_display.height = (count + 1) * (summaryHead.font.pixelSize / 2) * 4;
     }
 
     Flickable {
@@ -37,10 +37,10 @@ Item {
 
             Text {
                 id: summaryHead
-                text: "📈"
+                text: "🖐"
                 fontSizeMode: Text.VerticalFit
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pointSize: 14
+                font.pointSize: 24
                 horizontalAlignment: Text.AlignHCenter
             }
             Canvas {
@@ -75,7 +75,7 @@ Item {
                     var ctx = table_display.getContext('2d');
                     ctx.clearRect(0, 0, table_display.width, table_display.height);
                     TableRenderer.drawTable(ctx, tableData, table_display.width,
-                                            table_display.height, summaryHead.font.pixelSize,
+                                            table_display.height, summaryHead.font.pixelSize / 2,
                                             summaryHead.font.family);
                 }
             }

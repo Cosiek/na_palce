@@ -57,6 +57,7 @@ Item {
                 text: qsTr("⚙")
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.columnSpan: 2
+                font.pointSize: 24
             }
 
             Text {
