@@ -47,6 +47,11 @@ ApplicationWindow {
                 onClicked: stackView.push("qrc:/game.qml")
             }
             Button {
+                text: "🖐"
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: stackView.push("qrc:/fingers.qml")
+            }
+            Button {
                 text: "⚙"
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: stackView.push("qrc:/settings.qml")
