@@ -37,7 +37,7 @@ Item {
 
             Text {
                 id: summaryHead
-                text: "🖐"
+                text: "📈"
                 fontSizeMode: Text.VerticalFit
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pointSize: 24
